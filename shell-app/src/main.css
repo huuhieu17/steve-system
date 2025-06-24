@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/* Custom theme configuration */
+@theme {
+  /* Custom colors */
+  --color-macos-blue: #007AFF;
+  --color-macos-gray-50: #F9F9F9;
+  --color-macos-gray-100: #F0F0F0;
+  --color-macos-gray-200: #E5E5E5;
+  --color-macos-gray-300: #D1D1D1;
+  --color-macos-gray-400: #A1A1A1;
+  --color-macos-gray-500: #737373;
+  --color-macos-gray-600: #525252;
+  --color-macos-gray-700: #404040;
+  --color-macos-gray-800: #262626;
+  --color-macos-gray-900: #171717;
+  
+  --color-ios-blue: #007AFF;
+  --color-ios-green: #34C759;
+  --color-ios-orange: #FF9500;
+  --color-ios-red: #FF3B30;
+  --color-ios-purple: #AF52DE;
+  --color-ios-pink: #FF2D92;
+  --color-ios-yellow: #FFCC00;
+  --color-ios-gray-50: #F2F2F7;
+  --color-ios-gray-100: #E5E5EA;
+  --color-ios-gray-200: #D1D1D6;
+  --color-ios-gray-300: #C7C7CC;
+  --color-ios-gray-400: #AEAEB2;
+  --color-ios-gray-500: #8E8E93;
+  --color-ios-gray-600: #636366;
+  --color-ios-gray-700: #48484A;
+  --color-ios-gray-800: #3A3A3C;
+  --color-ios-gray-900: #1C1C1E;
+
+  /* Custom fonts */
+  --font-family-sf-pro: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  --font-family-sf-mono: "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace;
+
+  /* Custom border radius */
+  --radius-ios: 12px;
+  --radius-macos: 8px;
+  --radius-xl-ios: 20px;
+  --radius-2xl-ios: 24px;
+
+  /* Custom shadows */
+  --shadow-macos: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-ios: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --shadow-window: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-dock: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+  /* Custom animations */
+  --animate-bounce-gentle: bounce-gentle 0.6s ease-in-out;
+  --animate-slide-up: slide-up 0.3s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out;
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-scale-in: scale-in 0.2s ease-out;
+  --animate-dock-bounce: dock-bounce 0.3s ease-out;
+
+  /* Custom breakpoints */
+  --breakpoint-xs: 475px;
+  --breakpoint-mobile: 767px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+
+  /* Custom z-index */
+  --z-dock: 40;
+  --z-window: 30;
+  --z-modal: 50;
+  --z-statusbar: 60;
+  --z-splash: 70;
+}
+
+/* Custom keyframes */
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slide-down {
+  0% { transform: translateY(-100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes dock-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glassmorphism-dark {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .macos-window {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-window);
+  }
+
+  .ios-blur {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .dock-item {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dock-item:hover {
+    transform: scale(1.1) translateY(-2px);
+  }
+
+  .dock-item:active {
+    transform: scale(0.95);
+  }
+
+  .window-controls {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+
+  .window-controls:hover {
+    filter: brightness(1.2);
+  }
+
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .ios-no-select {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  .ios-safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .ios-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::selection {
+  background: rgba(0, 122, 255, 0.3);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #007aff;
+  outline-offset: 2px;
+}
+
+/* Responsive utilities */
+@media (max-width: 767px) {
+  .mobile\:hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop\:hidden {
+    display: none;
+  }
+}
