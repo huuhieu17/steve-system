@@ -11,6 +11,9 @@ import SettingsApp from "../apps/SettingsApp"
 import FinderApp from "../apps/FinderApp"
 import NotesApp from "../apps/NotesApp"
 import CalculatorApp from "../apps/CalculatorApp"
+import type { DynamicApp } from "../apps/DynamicAppManager"
+import DynamicWebApp from "../apps/DynamicWebApp"
+import SafariAppOptimized from "../apps/SafariApp"
 
 interface DesktopProps {
   username: string
@@ -58,7 +61,82 @@ export default function Desktop({ username, onLogout }: DesktopProps) {
     { id: "project", name: "My Project", icon: <FileCode className="w-10 h-10 text-blue-600" /> },
   ])
 
+  const [dynamicApps, setDynamicApps] = useState<DynamicApp[]>([])
+
+  const handleAddDynamicApp = (app: DynamicApp) => {
+    setDynamicApps([...dynamicApps, app])
+
+    // Thêm vào dock
+    const newDockItem = {
+      id: app.id,
+      name: app.name,
+      icon: <span className="text-lg">{app.icon}</span>,
+      color: app.color,
+    }
+    setDockItems([...dockItems, newDockItem])
+  }
+
+  const handleUpdateDynamicApp = (id: string, updatedApp: DynamicApp) => {
+    setDynamicApps(dynamicApps.map((app) => (app.id === id ? updatedApp : app)))
+
+    // Cập nhật dock item
+    setDockItems(
+      dockItems.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              name: updatedApp.name,
+              icon: <span className="text-lg">{updatedApp.icon}</span>,
+              color: updatedApp.color,
+            }
+          : item,
+      ),
+    )
+  }
+
+  const handleDeleteDynamicApp = (id: string) => {
+    setDynamicApps(dynamicApps.filter((app) => app.id !== id))
+    setDockItems(dockItems.filter((item) => item.id !== id))
+
+    // Đóng window nếu đang mở
+    setWindows(windows.filter((w) => w.id !== id))
+  }
+
   const openWindow = (appId: string) => {
+    // Check if it's a dynamic app
+    const dynamicApp = dynamicApps.find((app) => app.id === appId)
+    if (dynamicApp) {
+      const existingWindowIndex = windows.findIndex((w) => w.app === appId && w.isMinimized)
+
+      if (existingWindowIndex !== -1) {
+        const updatedWindows = [...windows]
+        updatedWindows[existingWindowIndex].isMinimized = false
+        setWindows(updatedWindows)
+        setFocusedWindowId(updatedWindows[existingWindowIndex].id)
+        return
+      }
+
+      const openWindow = windows.find((w) => w.app === appId && !w.isMinimized)
+      if (openWindow) {
+        setFocusedWindowId(openWindow.id)
+        return
+      }
+
+      const windowId = `${appId}-${Date.now()}`
+      const newWindow = {
+        id: windowId,
+        app: appId,
+        title: dynamicApp.name,
+        icon: <span className="text-sm">{dynamicApp.icon}</span>,
+        content: <DynamicWebApp app={dynamicApp} onClose={() => closeWindow(windowId)} />,
+        isMinimized: false,
+      }
+
+      setWindows([...windows, newWindow])
+      setFocusedWindowId(windowId)
+      return
+    }
+
     // Check if window is already open but minimized
     const existingWindowIndex = windows.findIndex((w) => w.app === appId && w.isMinimized)
 
@@ -99,7 +177,16 @@ export default function Desktop({ username, onLogout }: DesktopProps) {
           app: appId,
           title: "System Preferences",
           icon: <Settings className="w-4 h-4" />,
-          content: <SettingsApp username={username} onLogout={onLogout} />,
+          content: (
+            <SettingsApp
+              username={username}
+              onLogout={onLogout}
+              dynamicApps={dynamicApps}
+              onAddApp={handleAddDynamicApp}
+              onUpdateApp={handleUpdateDynamicApp}
+              onDeleteApp={handleDeleteDynamicApp}
+            />
+          ),
           isMinimized: false,
         }
         break
@@ -120,6 +207,16 @@ export default function Desktop({ username, onLogout }: DesktopProps) {
           title: "Calculator",
           icon: <Coffee className="w-4 h-4" />,
           content: <CalculatorApp />,
+          isMinimized: false,
+        }
+        break
+      case "safari":
+        newWindow = {
+          id: windowId,
+          app: appId,
+          title: "Safari",
+          icon: <Globe className="w-4 h-4" />,
+          content: <SafariAppOptimized onClose={() => closeWindow(windowId)} />,
           isMinimized: false,
         }
         break

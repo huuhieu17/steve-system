@@ -6,8 +6,9 @@ import IOSSettingsApp from "./apps/IOSSettingsApp"
 import IOSNotesApp from "./apps/IOSNotesApp"
 import IOSCalculatorApp from "./apps/IOSCalculatorApp"
 import IOSFinderApp from "./apps/IOSFinderApp"
-import IOSMailApp from "./apps/IOSMailApp"
 import IOSPhotosApp from "./apps/IOSPhotosApp"
+import IOSMailApp from "./apps/IOSMailApp"
+import IOSSafariApp from "./apps/IOSSafariApp"
 
 export default function IOSDesktop() {
   const [currentApp, setCurrentApp] = useState<string | null>(null)
@@ -34,6 +35,8 @@ export default function IOSDesktop() {
         return <IOSPhotosApp onClose={closeApp} />
       case "mail":
         return <IOSMailApp onClose={closeApp} />
+      case "safari":
+        return <IOSSafariApp onClose={closeApp} />
       default:
         return (
           <div className="h-screen w-full bg-white flex items-center justify-center">

@@ -9,7 +9,6 @@ import {
   Camera,
   ImagesIcon as Photos,
   Settings,
-  AppleIcon as Safari,
   Calculator,
   Clock,
   CloudRainWindIcon as Weather,
@@ -17,7 +16,8 @@ import {
   Calendar,
   StickyNoteIcon as Notes,
   ContactIcon as Contacts,
-  AppleIcon as AppStore,
+  Files,
+  Globe,
 } from "lucide-react"
 import IOSStatusBar from "./IOSStatusBar"
 import IOSDock from "./IOSDock"
@@ -35,7 +35,7 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       { id: "phone", name: "Phone", icon: Phone, color: "bg-green-500" },
       { id: "messages", name: "Messages", icon: MessageSquare, color: "bg-green-400" },
       { id: "mail", name: "Mail", icon: Mail, color: "bg-blue-500" },
-      { id: "safari", name: "Safari", icon: Safari, color: "bg-blue-400" },
+      { id: "safari", name: "Safari", icon: Globe, color: "bg-blue-400" },
       { id: "music", name: "Music", icon: Music, color: "bg-red-500" },
       { id: "camera", name: "Camera", icon: Camera, color: "bg-gray-600" },
       { id: "photos", name: "Photos", icon: Photos, color: "bg-gradient-to-br from-yellow-400 to-orange-500" },
@@ -47,19 +47,19 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       { id: "contacts", name: "Contacts", icon: Contacts, color: "bg-gray-500" },
       { id: "calculator", name: "Calculator", icon: Calculator, color: "bg-gray-800" },
       { id: "settings", name: "Settings", icon: Settings, color: "bg-gray-600" },
-      { id: "appstore", name: "App Store", icon: AppStore, color: "bg-blue-500" },
+      { id: "files", name: "Files", icon: Files, color: "bg-blue-500" },
     ],
   ]
 
   const dockApps = [
     { id: "phone", name: "Phone", icon: Phone, color: "bg-green-500" },
-    { id: "safari", name: "Safari", icon: Safari, color: "bg-blue-400" },
+    { id: "safari", name: "Safari", icon: Globe, color: "bg-blue-400" },
     { id: "messages", name: "Messages", icon: MessageSquare, color: "bg-green-400" },
     { id: "music", name: "Music", icon: Music, color: "bg-red-500" },
   ]
 
   return (
-    <div className="h-screen w-full bg-gradient-to-b from-blue-400 via-purple-500 to-pink-500 relative overflow-hidden">
+    <div className="h-screen w-full bg-gradient-to-b from-blue-400 via-purple-500 to-pink-500 relative overflow-hidden ios-safe-top ios-safe-bottom">
       {/* Wallpaper */}
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=400')] bg-cover bg-center opacity-30" />
 
@@ -75,7 +75,7 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
           {apps[currentPage]?.map((app) => (
             <button key={app.id} className="flex flex-col items-center group" onClick={() => onOpenApp(app.id)}>
               <div
-                className={`w-14 h-14 ${app.color} rounded-2xl flex items-center justify-center shadow-lg group-active:scale-95 transition-transform`}
+                className={`w-14 h-14 ${app.color} rounded-2xl flex items-center justify-center shadow-ios group-active:scale-95 transition-transform ios-no-select`}
               >
                 <app.icon className="w-8 h-8 text-white" />
               </div>

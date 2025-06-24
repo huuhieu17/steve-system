@@ -6,13 +6,26 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import DynamicAppManager, { type DynamicApp } from "./DynamicAppManager"
 
+// Thêm props cho dynamic apps
 interface SettingsAppProps {
   username: string
   onLogout: () => void
+  dynamicApps?: DynamicApp[]
+  onAddApp?: (app: DynamicApp) => void
+  onUpdateApp?: (id: string, app: DynamicApp) => void
+  onDeleteApp?: (id: string) => void
 }
 
-export default function SettingsApp({ username, onLogout }: SettingsAppProps) {
+export default function SettingsApp({
+  username,
+  onLogout,
+  dynamicApps,
+  onAddApp,
+  onUpdateApp,
+  onDeleteApp,
+}: SettingsAppProps) {
   const [volume, setVolume] = useState(75)
   const [darkMode, setDarkMode] = useState(false)
   const [notifications, setNotifications] = useState(true)
@@ -56,6 +69,7 @@ export default function SettingsApp({ username, onLogout }: SettingsAppProps) {
             <TabsTrigger value="sound">Sound</TabsTrigger>
             <TabsTrigger value="network">Network</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
+            <TabsTrigger value="apps">Apps</TabsTrigger>
           </TabsList>
 
           <TabsContent value="general" className="space-y-6">
@@ -234,6 +248,24 @@ export default function SettingsApp({ username, onLogout }: SettingsAppProps) {
                   <span>Đăng xuất</span>
                 </Button>
               </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="apps" className="space-y-6">
+            <div className="space-y-4">
+              <h2 className="text-lg font-medium">Dynamic Apps Management</h2>
+              <p className="text-sm text-gray-600">
+                Thêm các ứng dụng web, component React hoặc micro frontend vào desktop.
+              </p>
+
+              {onAddApp && onUpdateApp && onDeleteApp && (
+                <DynamicAppManager
+                  apps={dynamicApps || []}
+                  onAddApp={onAddApp}
+                  onUpdateApp={onUpdateApp}
+                  onDeleteApp={onDeleteApp}
+                />
+              )}
             </div>
           </TabsContent>
         </Tabs>
