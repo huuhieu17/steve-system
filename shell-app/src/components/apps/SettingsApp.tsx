@@ -27,7 +27,7 @@ export default function SettingsApp({
 
   const [volume, setVolume] = useState(75)
   const [darkMode, setDarkMode] = useState(false)
-  const [notifications, setNotifications] = useState(true)
+  // const [notifications, setNotifications] = useState(true)
   const [wifi, setWifi] = useState(true)
 
   const settingsCategories = [

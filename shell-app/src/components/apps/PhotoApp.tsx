@@ -15,7 +15,7 @@ const PhotoApp = (props: Props) => {
         allowFullscreen: true,
     }
   return (
-    <DynamicWebApp app={app}/>
+    <DynamicWebApp app={app} {...props} />
   )
 }
 

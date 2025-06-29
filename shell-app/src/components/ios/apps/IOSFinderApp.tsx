@@ -25,7 +25,7 @@ interface IOSFinderAppProps {
 }
 
 export default function IOSFinderApp({ onClose }: IOSFinderAppProps) {
-  const [currentPath, setCurrentPath] = useState("Browse")
+  const [currentPath] = useState("Browse")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedFolder, setSelectedFolder] = useState<string | null>(null)

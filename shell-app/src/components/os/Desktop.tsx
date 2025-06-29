@@ -20,6 +20,7 @@ export default function Desktop({ }: DesktopProps) {
   ])
 
   const handleDockItemClick = (appId: string) => {
+    
     windowManager.openWindow(appId)
   }
 
