@@ -12,11 +12,11 @@ import Desktop from "./os/Desktop"
 import IOSSplashScreen from "./ios/IOSSplashScreen"
 import IOSLockScreen from "./ios/IOSLockScreen"
 import IOSDesktop from "./ios/IOSDesktop"
+import { useSystem } from "@/contexts/user-context"
 
 export default function ResponsiveOS() {
   const deviceType = useDeviceType()
-  const [bootState, setBootState] = useState<"splash" | "login" | "desktop">("splash")
-  const [username, setUsername] = useState("")
+  const {setBootState, setUser, bootState} = useSystem();
 
   // Default users with Guest account
   const [users] = useState([
@@ -30,14 +30,11 @@ export default function ResponsiveOS() {
   }
 
   const handleLogin = (username: string) => {
-    setUsername(username)
+    setUser({username})
     setBootState("desktop")
   }
 
-  const handleLogout = () => {
-    setBootState("login")
-    setUsername("")
-  }
+ 
 
   // Render iOS interface for mobile
   if (deviceType === "mobile") {
@@ -55,7 +52,7 @@ export default function ResponsiveOS() {
     <main className="h-screen w-full overflow-hidden">
       {bootState === "splash" && <SplashScreen onComplete={handleSplashComplete} />}
       {bootState === "login" && <LoginScreen onLogin={handleLogin} users={users} />}
-      {bootState === "desktop" && <Desktop username={username} onLogout={handleLogout} />}
+      {bootState === "desktop" && <Desktop />}
     </main>
   )
 }

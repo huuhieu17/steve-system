@@ -2,25 +2,24 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
-import { Folder, FileText, Settings, Mail, MessageSquare, Terminal, Globe, Coffee, FileCode } from "lucide-react"
-import StatusBar from "./StatusBar"
-import Dock from "./Dock"
-import Window from "./Window"
-import SettingsApp from "../apps/SettingsApp"
-import FinderApp from "../apps/FinderApp"
-import NotesApp from "../apps/NotesApp"
+import { Coffee, FileCode, FileText, Folder, Globe, Mail, MessageSquare, Settings, Terminal } from "lucide-react"
+import { useEffect, useState } from "react"
 import CalculatorApp from "../apps/CalculatorApp"
 import type { DynamicApp } from "../apps/DynamicAppManager"
 import DynamicWebApp from "../apps/DynamicWebApp"
+import FinderApp from "../apps/FinderApp"
+import NotesApp from "../apps/NotesApp"
 import SafariAppOptimized from "../apps/SafariApp"
+import SettingsApp from "../apps/SettingsApp"
+import Dock from "./Dock"
+import StatusBar from "./StatusBar"
+import Window from "./Window"
 
 interface DesktopProps {
-  username: string
-  onLogout: () => void
 }
 
-export default function Desktop({ username, onLogout }: DesktopProps) {
+export default function Desktop({ }: DesktopProps) {
+
   const [windows, setWindows] = useState<
     {
       id: string
@@ -55,7 +54,12 @@ export default function Desktop({ username, onLogout }: DesktopProps) {
   ])
 
   const [desktopIcons] = useState([
-    { id: "documents", name: "Documents", icon: <Folder className="w-10 h-10 text-blue-500" /> },
+     {
+      id: "movies",
+      name: "Xem Phim",
+      icon: <Settings className="w-6 h-6 text-white" />,
+      color: "bg-gray-500",
+    },
     { id: "downloads", name: "Downloads", icon: <Folder className="w-10 h-10 text-blue-500" /> },
     { id: "applications", name: "Applications", icon: <Folder className="w-10 h-10 text-blue-500" /> },
     { id: "project", name: "My Project", icon: <FileCode className="w-10 h-10 text-blue-600" /> },
@@ -167,7 +171,7 @@ export default function Desktop({ username, onLogout }: DesktopProps) {
           app: appId,
           title: "Finder",
           icon: <Folder className="w-4 h-4" />,
-          content: <FinderApp username={username} />,
+          content: <FinderApp />,
           isMinimized: false,
         }
         break
@@ -179,8 +183,6 @@ export default function Desktop({ username, onLogout }: DesktopProps) {
           icon: <Settings className="w-4 h-4" />,
           content: (
             <SettingsApp
-              username={username}
-              onLogout={onLogout}
               dynamicApps={dynamicApps}
               onAddApp={handleAddDynamicApp}
               onUpdateApp={handleUpdateDynamicApp}
@@ -290,7 +292,7 @@ export default function Desktop({ username, onLogout }: DesktopProps) {
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-20" />
 
       {/* Status Bar */}
-      <StatusBar username={username} onOpenSettings={handleOpenSettings} />
+      <StatusBar onOpenSettings={handleOpenSettings} />
 
       {/* Desktop Icons */}
       <div className="absolute top-10 left-4 space-y-6">
@@ -298,7 +300,7 @@ export default function Desktop({ username, onLogout }: DesktopProps) {
           <div
             key={icon.id}
             className="flex flex-col items-center w-20 group cursor-pointer"
-            onDoubleClick={() => (icon.id === "applications" ? openWindow("finder") : null)}
+            onClick={() => (openWindow(icon.id))}
           >
             <div className="p-2 rounded-lg group-hover:bg-white/10">{icon.icon}</div>
             <span className="text-xs text-white text-center mt-1 px-1 py-0.5 rounded group-hover:bg-blue-500">

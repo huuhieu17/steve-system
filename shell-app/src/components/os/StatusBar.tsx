@@ -1,14 +1,15 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Wifi, Battery, Volume2, Bell } from "lucide-react"
+import { useSystem } from "@/contexts/user-context"
+import { Battery, Bell, Volume2, Wifi } from "lucide-react"
+import { useEffect, useState } from "react"
 
 interface StatusBarProps {
-  username: string
   onOpenSettings: () => void
 }
 
-export default function StatusBar({ username, onOpenSettings }: StatusBarProps) {
+export default function StatusBar({ onOpenSettings }: StatusBarProps) {
+  const { user } = useSystem()
   const [time, setTime] = useState(
     new Date().toLocaleTimeString("vi-VN", {
       hour: "2-digit",
@@ -99,9 +100,9 @@ export default function StatusBar({ username, onOpenSettings }: StatusBarProps) 
           onClick={onOpenSettings}
         >
           <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center text-[10px]">
-            {username.charAt(0).toUpperCase()}
+            {user && user.username.charAt(0).toUpperCase()}
           </div>
-          <span>{username}</span>
+          <span>{user && user.username}</span>
         </div>
       </div>
     </div>

@@ -19,10 +19,9 @@ import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface FinderAppProps {
-  username: string
 }
 
-export default function FinderApp({ username }: FinderAppProps) {
+export default function FinderApp({ }: FinderAppProps) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [searchQuery, setSearchQuery] = useState("")
 

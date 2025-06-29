@@ -1,0 +1,1 @@
+export type BootState = "splash" | "login" | "desktop";

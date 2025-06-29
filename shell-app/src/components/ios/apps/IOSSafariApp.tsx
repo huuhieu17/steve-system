@@ -1,6 +1,6 @@
 "use client"
 
-import SafariAppOptimized from "../../apps/SafariAppOptimized"
+import SafariAppOptimized from "@/components/apps/SafariApp"
 
 interface IOSSafariAppProps {
   onClose: () => void

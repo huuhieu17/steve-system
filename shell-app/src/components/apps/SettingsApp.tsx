@@ -7,11 +7,10 @@ import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import DynamicAppManager, { type DynamicApp } from "./DynamicAppManager"
+import { useSystem } from "@/contexts/user-context"
 
 // Thêm props cho dynamic apps
 interface SettingsAppProps {
-  username: string
-  onLogout: () => void
   dynamicApps?: DynamicApp[]
   onAddApp?: (app: DynamicApp) => void
   onUpdateApp?: (id: string, app: DynamicApp) => void
@@ -19,13 +18,13 @@ interface SettingsAppProps {
 }
 
 export default function SettingsApp({
-  username,
-  onLogout,
   dynamicApps,
   onAddApp,
   onUpdateApp,
   onDeleteApp,
 }: SettingsAppProps) {
+  const { user, handleLogout } = useSystem();
+
   const [volume, setVolume] = useState(75)
   const [darkMode, setDarkMode] = useState(false)
   const [notifications, setNotifications] = useState(true)
@@ -234,16 +233,16 @@ export default function SettingsApp({
 
               <div className="flex items-center space-x-4 p-4 border rounded-lg">
                 <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-bold">
-                  {username.charAt(0).toUpperCase()}
+                  {user && user.username.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <div className="font-medium text-lg">{username}</div>
+                  <div className="font-medium text-lg">{user && user.username}</div>
                   <div className="text-sm text-gray-500">Administrator</div>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Button variant="destructive" className="flex items-center space-x-2" onClick={onLogout}>
+                <Button variant="destructive" className="flex items-center space-x-2" onClick={handleLogout}>
                   <LogOut className="w-4 h-4" />
                   <span>Đăng xuất</span>
                 </Button>
