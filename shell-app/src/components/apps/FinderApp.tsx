@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useSystem } from "@/contexts/user-context"
 
 interface FinderAppProps {
 }
@@ -24,7 +25,7 @@ interface FinderAppProps {
 export default function FinderApp({ }: FinderAppProps) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [searchQuery, setSearchQuery] = useState("")
-
+  const { user } = useSystem();
   const sidebarItems = [
     { name: "Favorites", isHeader: true },
     { name: "AirDrop", icon: <Folder className="w-4 h-4" /> },
@@ -35,7 +36,7 @@ export default function FinderApp({ }: FinderAppProps) {
     { name: "Downloads", icon: <Folder className="w-4 h-4" /> },
     { name: "Locations", isHeader: true },
     { name: "iCloud Drive", icon: <Folder className="w-4 h-4" /> },
-    { name: `${username}'s MacBook`, icon: <Folder className="w-4 h-4" /> },
+    { name: `${user && user.username}'s MacBook`, icon: <Folder className="w-4 h-4" /> },
     { name: "Network", icon: <Folder className="w-4 h-4" /> },
   ]
 

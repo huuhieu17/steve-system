@@ -16,19 +16,13 @@ export default function CalculatorApp() {
     setWaitingForOperand(false)
   }
 
-  const clearDisplay = () => {
-    setDisplay("0")
-  }
-
-  const toggleSign = () => {
-    const newValue = Number.parseFloat(display) * -1
-    setDisplay(String(newValue))
-  }
-
-  const inputPercent = () => {
-    const currentValue = Number.parseFloat(display)
-    const newValue = currentValue / 100
-    setDisplay(String(newValue))
+  const inputDigit = (digit: string) => {
+    if (waitingForOperand) {
+      setDisplay(digit)
+      setWaitingForOperand(false)
+    } else {
+      setDisplay(display === "0" ? digit : display + digit)
+    }
   }
 
   const inputDot = () => {
@@ -40,15 +34,6 @@ export default function CalculatorApp() {
 
     if (display.indexOf(".") === -1) {
       setDisplay(display + ".")
-    }
-  }
-
-  const inputDigit = (digit: string) => {
-    if (waitingForOperand) {
-      setDisplay(digit)
-      setWaitingForOperand(false)
-    } else {
-      setDisplay(display === "0" ? digit : display + digit)
     }
   }
 
@@ -98,10 +83,16 @@ export default function CalculatorApp() {
           <Button onClick={clearAll} className="bg-gray-700 hover:bg-gray-600 text-white">
             AC
           </Button>
-          <Button onClick={toggleSign} className="bg-gray-700 hover:bg-gray-600 text-white">
+          <Button
+            onClick={() => setDisplay(String(-Number.parseFloat(display)))}
+            className="bg-gray-700 hover:bg-gray-600 text-white"
+          >
             +/-
           </Button>
-          <Button onClick={inputPercent} className="bg-gray-700 hover:bg-gray-600 text-white">
+          <Button
+            onClick={() => setDisplay(String(Number.parseFloat(display) / 100))}
+            className="bg-gray-700 hover:bg-gray-600 text-white"
+          >
             %
           </Button>
           <Button

@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { RefreshCw, ExternalLink, Maximize, Minimize, Code, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Code, ExternalLink, Globe, Maximize, Minimize, RefreshCw } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 import type { DynamicApp } from "./DynamicAppManager"
 
 interface DynamicWebAppProps {
@@ -11,6 +11,8 @@ interface DynamicWebAppProps {
 }
 
 export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
+
+
   const [isLoading, setIsLoading] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -91,9 +93,6 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
             <span className="text-sm font-medium">{app.name}</span>
           </div>
           <div className="flex items-center space-x-1">
-            <Button variant="ghost" size="sm" onClick={onClose}>
-              ✕
-            </Button>
           </div>
         </div>
         <div className="flex-1 flex items-center justify-center bg-gray-50">
@@ -117,7 +116,7 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
         <div className="flex items-center space-x-2">
           <div className={`w-4 h-4 ${app.color} rounded`}></div>
           <span className="text-sm font-medium">{app.name}</span>
-          {app.url && <span className="text-xs text-gray-500 truncate max-w-xs">{app.url}</span>}
+          {/* {app.url && <span className="text-xs text-gray-500 truncate max-w-xs">{app.url}</span>} */}
         </div>
 
         <div className="flex items-center space-x-1">
@@ -132,9 +131,6 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
               {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
             </Button>
           )}
-          <Button variant="ghost" size="sm" onClick={onClose}>
-            ✕
-          </Button>
         </div>
       </div>
 
