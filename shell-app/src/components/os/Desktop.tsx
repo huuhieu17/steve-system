@@ -16,7 +16,8 @@ export default function Desktop({ }: DesktopProps) {
 
   const [desktopApps] = useState<any>([
     APP_CONFIGS.movies,
-    APP_CONFIGS.notes
+    APP_CONFIGS.notes,
+    APP_CONFIGS.photos
   ])
 
   const handleDockItemClick = (appId: string) => {

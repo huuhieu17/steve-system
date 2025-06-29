@@ -1,25 +1,26 @@
 "use client"
 
-import { useState } from "react"
-import {
-  User,
-  Wifi,
-  Bluetooth,
-  Bell,
-  Moon,
-  Shield,
-  Globe,
-  Volume2,
-  Battery,
-  ChevronRight,
-  Smartphone,
-  Eye,
-  Palette,
-} from "lucide-react"
-import { Switch } from "@/components/ui/switch"
-import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Slider } from "@/components/ui/slider"
+import { Switch } from "@/components/ui/switch"
+import { useSystem } from "@/contexts/user-context"
+import {
+  Battery,
+  Bell,
+  Bluetooth,
+  ChevronRight,
+  Eye,
+  Globe,
+  Moon,
+  Palette,
+  Shield,
+  Smartphone,
+  User,
+  Volume2,
+  Wifi,
+} from "lucide-react"
+import { useState } from "react"
 import IOSApp from "../IOSApp"
 
 interface IOSSettingsAppProps {
@@ -29,6 +30,8 @@ interface IOSSettingsAppProps {
 }
 
 export default function IOSSettingsApp({ onClose, username = "Guest", onLogout }: IOSSettingsAppProps) {
+
+  const { handleLogout } = useSystem();
   const [wifiEnabled, setWifiEnabled] = useState(true)
   const [bluetoothEnabled, setBluetoothEnabled] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
@@ -225,7 +228,9 @@ export default function IOSSettingsApp({ onClose, username = "Guest", onLogout }
                   Tạo tài khoản mới
                 </Button>
               </div>
-
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={() => handleLogout()}>
+                Đăng xuất
+              </Button>
               {showCreateAccount && (
                 <div className="space-y-4">
                   <h3 className="font-medium">Tạo tài khoản mới</h3>
@@ -411,9 +416,8 @@ export default function IOSSettingsApp({ onClose, username = "Guest", onLogout }
               {group.items.map((item: any, itemIndex: number) => (
                 <button
                   key={itemIndex}
-                  className={`w-full flex items-center p-4 ${
-                    itemIndex < group.items.length - 1 ? "border-b border-gray-100" : ""
-                  } active:bg-gray-50`}
+                  className={`w-full flex items-center p-4 ${itemIndex < group.items.length - 1 ? "border-b border-gray-100" : ""
+                    } active:bg-gray-50`}
                   onClick={item.onTap}
                 >
                   <div className={`w-8 h-8 ${item.iconBg} rounded-lg flex items-center justify-center mr-3`}>

@@ -131,6 +131,9 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
               {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
             </Button>
           )}
+          <Button variant="ghost" size="sm" onClick={onClose}>
+              ✕
+            </Button>
         </div>
       </div>
 

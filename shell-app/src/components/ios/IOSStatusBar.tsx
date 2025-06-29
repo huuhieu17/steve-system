@@ -27,17 +27,11 @@ export default function IOSStatusBar() {
       <div>{time}</div>
       <div className="flex items-center space-x-1">
         {/* Signal bars */}
-        <div className="flex space-x-0.5">
+        <div className="flex space-x-0.5 rotate-180">
           <div className="w-1 h-2 bg-white rounded-full" />
           <div className="w-1 h-3 bg-white rounded-full" />
           <div className="w-1 h-4 bg-white rounded-full" />
           <div className="w-1 h-4 bg-white rounded-full" />
-        </div>
-        {/* WiFi */}
-        <div className="w-4 h-3 relative">
-          <div className="absolute bottom-0 left-0 w-1 h-1 bg-white rounded-full" />
-          <div className="absolute bottom-0 left-1 w-1 h-2 bg-white rounded-full" />
-          <div className="absolute bottom-0 left-2 w-1 h-3 bg-white rounded-full" />
         </div>
         {/* Battery */}
         <div className="w-6 h-3 border border-white rounded-sm relative">

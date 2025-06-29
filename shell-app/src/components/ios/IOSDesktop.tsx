@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import DynamicWebApp from "../apps/DynamicWebApp"
 import IOSHomeScreen from "./IOSHomeScreen"
-import IOSSettingsApp from "./apps/IOSSettingsApp"
-import IOSNotesApp from "./apps/IOSNotesApp"
 import IOSCalculatorApp from "./apps/IOSCalculatorApp"
 import IOSFinderApp from "./apps/IOSFinderApp"
-import IOSPhotosApp from "./apps/IOSPhotosApp"
 import IOSMailApp from "./apps/IOSMailApp"
+import IOSNotesApp from "./apps/IOSNotesApp"
 import IOSSafariApp from "./apps/IOSSafariApp"
+import IOSSettingsApp from "./apps/IOSSettingsApp"
 
 export default function IOSDesktop() {
   const [currentApp, setCurrentApp] = useState<string | null>(null)
@@ -32,7 +32,27 @@ export default function IOSDesktop() {
       case "files":
         return <IOSFinderApp onClose={closeApp} />
       case "photos":
-        return <IOSPhotosApp onClose={closeApp} />
+        // return <IOSPhotosApp onClose={closeApp} />
+        return <DynamicWebApp app={{
+          id: 'photos',
+          url: 'https://gallery.imsteve.dev',
+          name: 'Xem Ảnh',
+          type: "iframe",
+          icon: 'film',
+          color: "bg-blue-500",
+          allowFullscreen: true,
+        }} onClose={closeApp} />
+      case "movies":
+        // return <IOSPhotosApp onClose={closeApp} />
+        return <DynamicWebApp app={{
+          id: 'movies',
+          url: 'https://movie.imsteve.dev',
+          name: 'Xem Phim',
+          type: "iframe",
+          icon: 'film',
+          color: "bg-blue-500",
+          allowFullscreen: true,
+        }} onClose={closeApp} />
       case "mail":
         return <IOSMailApp onClose={closeApp} />
       case "safari":

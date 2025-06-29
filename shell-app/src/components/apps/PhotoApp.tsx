@@ -9,7 +9,7 @@ const PhotoApp = (props: Props) => {
         id: AppId.PHOTOS,
         name: 'Photos',
         type: "iframe",
-        url: 'https://photos.imsteve.dev',
+        url: 'https://gallery.imsteve.dev',
         icon: 'photos',
         color: "bg-blue-500",
         allowFullscreen: true,
