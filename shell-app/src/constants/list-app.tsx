@@ -21,6 +21,7 @@ import NotesApp from "@/components/apps/NotesApp"
 import CalculatorApp from "@/components/apps/CalculatorApp"
 import MovieApp from "@/components/apps/MovieApp"
 import PhotoApp from "@/components/apps/PhotoApp"
+import SafariAppOptimized from "@/components/apps/SafariApp"
 
 export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.FINDER]: {
@@ -87,7 +88,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         defaultSize: { width: 900, height: 600 },
         minSize: { width: 500, height: 300 },
         defaultPosition: { x: 50, y: 50 },
-        component: () => <div className="p-4">Safari Browser (Coming Soon)</div>,
+        component: () => <SafariAppOptimized/>,
     },
     [AppId.MAIL]: {
         id: AppId.MAIL,
@@ -181,12 +182,12 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
 
 export const DOCK_APPS: AppId[] = [
     AppId.FINDER,
-    AppId.MAIL,
+    // AppId.MAIL,
     AppId.SAFARI,
-    AppId.MESSAGES,
+    // AppId.MESSAGES,
     AppId.NOTES,
     AppId.CALCULATOR,
-    AppId.TERMINAL,
+    // AppId.TERMINAL,
     AppId.SETTINGS,
 ]
 

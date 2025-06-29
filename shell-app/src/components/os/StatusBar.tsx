@@ -1,6 +1,7 @@
 "use client"
 
 import { useSystem } from "@/contexts/user-context"
+import { useWindowManager } from "@/hooks/useWindowManager"
 import { Battery, Bell, Volume2, Wifi } from "lucide-react"
 import { useEffect, useState } from "react"
 
@@ -9,6 +10,7 @@ interface StatusBarProps {
 }
 
 export default function StatusBar({ onOpenSettings }: StatusBarProps) {
+  const windowManager = useWindowManager();
   const { user } = useSystem()
   const [time, setTime] = useState(
     new Date().toLocaleTimeString("vi-VN", {
@@ -49,8 +51,8 @@ export default function StatusBar({ onOpenSettings }: StatusBarProps) {
   return (
     <div className="absolute top-0 left-0 right-0 h-6 bg-black/20 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-4 text-white text-sm font-medium z-50">
       <div className="flex items-center space-x-4">
-        <div className="font-bold">🍎</div>
-        <span>Finder</span>
+        <div className="font-bold">Steve</div>
+        <span onClick={() => windowManager.openWindow('finder')}>Finder</span>
         <span>File</span>
         <span>Edit</span>
         <span>View</span>
