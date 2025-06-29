@@ -43,9 +43,6 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
 
   return (
     <div className="h-screen w-full bg-gradient-to-b from-blue-900 via-purple-900 to-pink-900 relative overflow-hidden">
-      {/* Dynamic Island / Notch */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10" />
-
       {/* Status Bar */}
       <div className="absolute top-2 left-4 right-4 flex justify-between items-center text-white text-sm font-medium z-20">
         <div>{time.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })}</div>
