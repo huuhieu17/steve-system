@@ -14,8 +14,6 @@ interface IOSAppProps {
 export default function IOSApp({ title, onClose, children, showBackButton = true }: IOSAppProps) {
   return (
     <div className="h-screen w-full bg-white flex flex-col">
-      {/* Dynamic Island */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10" />
 
       {/* Header */}
       <div className="pt-8 pb-2 px-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
