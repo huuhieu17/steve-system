@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Apple } from "lucide-react"
 
 export default function IOSSplashScreen({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0)
