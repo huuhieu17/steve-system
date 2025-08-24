@@ -1,6 +1,5 @@
 "use client"
 
-import { Cpu } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export default function SplashScreen({ onComplete }: { onComplete: () => void }) {
