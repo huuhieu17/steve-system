@@ -25,7 +25,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
 
   return (
     <div className="h-screen w-full bg-black flex flex-col items-center justify-center">
-      <Cpu className="w-24 h-24 text-white mb-8" />
+      <div className="w-24 text-white text-3xl mb-5" >STEVE</div>
       <div className="w-64 h-1 bg-gray-800 rounded-full overflow-hidden">
         <div
           className="h-full bg-white rounded-full transition-all duration-300 ease-out"

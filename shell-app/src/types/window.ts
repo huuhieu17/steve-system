@@ -1,3 +1,4 @@
+import type { JSX } from "react"
 import type React from "react"
 export interface WindowPosition {
   x: number
@@ -33,7 +34,7 @@ export interface AppConfig {
   defaultSize: WindowSize
   minSize: WindowSize
   defaultPosition: WindowPosition
-  component: React.ComponentType<any>
+  component: React.ComponentType<any> | JSX.Element
   props?: Record<string, any>
 }
 
@@ -61,6 +62,10 @@ export enum AppId {
   CONTACTS = "contacts",
   MOVIES = "movies",
   DRIVE = "drive",
+  TELEGRAM = "telegram",
+  FACEBOOK = "facebook",
+  GITHUB = "github",
+  COMIC = "comic",
 }
 
 export interface WindowManagerState {

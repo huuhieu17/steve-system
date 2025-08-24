@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 export interface DynamicApp {
   id: string
   name: string
-  type: "iframe" | "component" | "micro-frontend"
+  type: "iframe" | "component" | "micro-frontend" | "link"
   url?: string
   componentPath?: string
   icon: string

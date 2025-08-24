@@ -16,11 +16,13 @@ import {
   Shield,
   Download,
   MoreHorizontal,
+  CircleX,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useWindowManager } from "@/hooks/useWindowManager"
 
 interface SafariTab {
   id: string
@@ -38,6 +40,9 @@ interface SafariAppProps {
 }
 
 export default function SafariAppOptimized({ onClose, isMobile = false }: SafariAppProps) {
+
+  const windowManager = useWindowManager();
+
   const [tabs, setTabs] = useState<SafariTab[]>([
     {
       id: "tab-1",
@@ -188,6 +193,10 @@ export default function SafariAppOptimized({ onClose, isMobile = false }: Safari
     }
   }, [activeTabId])
 
+  const closeSafari = () => {
+    windowManager.setCurrentIOSApp(null);
+  }
+
   if (isMobile) {
     return (
       <div className="h-full flex flex-col bg-white">
@@ -225,6 +234,9 @@ export default function SafariAppOptimized({ onClose, isMobile = false }: Safari
               </Button>
               <Button variant="ghost" size="sm" onClick={() => createNewTab()} className="h-8 w-8 p-0">
                 <Plus className="w-4 h-4" />
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => closeSafari()} className="h-8 w-8 p-0">
+                <CircleX className="w-4 h-4"  />
               </Button>
             </div>
           </div>

@@ -7,10 +7,17 @@ import { windowManager } from "@/utils/windowManager"
 
 export function useWindowManager() {
   const [state, setState] = useState<WindowManagerState>(windowManager.getState())
+  const [currentIOSApp, setCurrentIOSApp] = useState<string | null>(
+    windowManager.getCurrentIOSApp()
+  )
 
   useEffect(() => {
     const unsubscribe = windowManager.subscribe(setState)
-    return unsubscribe
+     const unsubscribeIOS = windowManager.subscribeCurrentIOSApp(setCurrentIOSApp)
+    return () => {
+      unsubscribe()
+      unsubscribeIOS()
+    }
   }, [])
 
   return {
@@ -26,5 +33,7 @@ export function useWindowManager() {
     getAppConfig: windowManager.getAppConfig.bind(windowManager),
     isAppOpen: windowManager.isAppOpen.bind(windowManager),
     getOpenApps: windowManager.getOpenApps.bind(windowManager),
+    currentIOSApp: currentIOSApp,
+    setCurrentIOSApp: windowManager.setCurrentIOSApp.bind(windowManager),
   }
 }

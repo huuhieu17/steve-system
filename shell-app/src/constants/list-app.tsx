@@ -1,27 +1,31 @@
+import CalculatorApp from "@/components/apps/CalculatorApp"
+import DynamicWebApp from "@/components/apps/DynamicWebApp"
+import FinderApp from "@/components/apps/FinderApp"
+import NotesApp from "@/components/apps/NotesApp"
+import PhotoApp from "@/components/apps/PhotoApp"
+import SafariAppOptimized from "@/components/apps/SafariApp"
+import SettingsApp from "@/components/apps/SettingsApp"
+import { type AppConfig, AppCategory, AppId } from "@/types/window"
 import {
-    Folder,
-    Settings,
-    FileText,
+    BookOpen,
     Calculator,
-    Terminal,
+    Calendar,
+    Camera,
+    Facebook,
+    FileText,
+    Film,
+    Folder,
+    Github,
     Globe,
+    HardDrive,
     Mail,
     MessageSquare,
     Music,
-    Camera,
-    Calendar,
-    User,
-    Film,
-    HardDrive
+    Send,
+    Settings,
+    Terminal,
+    User
 } from "lucide-react"
-import { type AppConfig, AppCategory, AppId } from "@/types/window"
-import FinderApp from "@/components/apps/FinderApp"
-import SettingsApp from "@/components/apps/SettingsApp"
-import NotesApp from "@/components/apps/NotesApp"
-import CalculatorApp from "@/components/apps/CalculatorApp"
-import MovieApp from "@/components/apps/MovieApp"
-import PhotoApp from "@/components/apps/PhotoApp"
-import SafariAppOptimized from "@/components/apps/SafariApp"
 
 export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.FINDER]: {
@@ -125,8 +129,8 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     },
     [AppId.PHOTOS]: {
         id: AppId.PHOTOS,
-        name: "Photos",
-        icon: <Camera className="w-6 h-6 text-white" />,
+        name: "Thư viện ảnh",
+        icon: <Camera className="bg-gradient-to-br from-red-400 to-pink-500 w-10 h-10 text-white p-2 rounded" />,
         color: "bg-gradient-to-br from-yellow-400 to-orange-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 600 },
@@ -137,13 +141,97 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.MOVIES]: {
         id: AppId.MOVIES,
         name: "Xem Phim",
-        icon: <Film className="w-6 h-6 text-white" />,
+        icon: <Film className="w-10 h-10 bg-gradient-to-br from-black-400 to-green-500 text-white p-2 rounded" />,
         color: "bg-blue-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
         defaultPosition: { x: 100, y: 50 },
-        component: MovieApp,
+        component:() => <DynamicWebApp app={{
+            id: AppId.MOVIES,
+            name: 'Xem phim',
+            type: "iframe",
+            url: 'https://movie.imsteve.dev',
+            icon: 'film',
+            color: "bg-blue-500",
+            allowFullscreen: true,
+        }} />,
+    },
+    [AppId.COMIC]: {
+        id: AppId.COMIC,
+        name: "Dọc Truyện",
+        icon: <BookOpen className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-red-500 text-white p-2 rounded" />,
+        color: "bg-blue-500",
+        category: AppCategory.MEDIA,
+        defaultSize: { width: 800, height: 500 },
+        minSize: { width: 400, height: 300 },
+        defaultPosition: { x: 100, y: 50 },
+        component:() => <DynamicWebApp app={{
+            id: AppId.COMIC,
+            name: 'Dọc Truyện',
+            type: "iframe",
+            url: 'https://comic.imsteve.dev',
+            icon: 'film',
+            color: "bg-blue-500",
+            allowFullscreen: true,
+        }} />,
+    },
+    [AppId.FACEBOOK]: {
+        id: AppId.FACEBOOK,
+        name: "Facebook",
+        icon: <Facebook className="bg-blue-500 w-10 h-10 text-white p-2 rounded" />,
+        color: "bg-blue-500",
+        category: AppCategory.MEDIA,
+        defaultSize: { width: 800, height: 500 },
+        minSize: { width: 400, height: 300 },
+        defaultPosition: { x: 100, y: 50 },
+        component:() => <DynamicWebApp app={{
+            id: AppId.FACEBOOK,
+            name: 'Facebook',
+            type: "link",
+            url: 'https://facebook.com/huuhieu2001',
+            icon: 'film',
+            color: "bg-blue-500",
+            allowFullscreen: true,
+        }} />,
+    },
+    [AppId.GITHUB]: {
+        id: AppId.GITHUB,
+        name: "GitHub",
+        icon: <Github className="bg-gray-800 w-10 h-10 text-white p-2 rounded" />,
+        color: "bg-blue-500",
+        category: AppCategory.MEDIA,
+        defaultSize: { width: 800, height: 500 },
+        minSize: { width: 400, height: 300 },
+        defaultPosition: { x: 100, y: 50 },
+        component:() => <DynamicWebApp app={{
+            id: AppId.GITHUB,
+            name: 'GitHub',
+            type: "link",
+            url: 'https://github.com/huuhieu17',
+            icon: 'film',
+            color: "bg-blue-500",
+            allowFullscreen: true,
+        }} />,
+    },
+    [AppId.TELEGRAM]: {
+        id: AppId.TELEGRAM,
+        name: "Telegram",
+        icon: <Send className="bg-blue-400 w-10 h-10 text-white p-2 rounded" />,
+        color: "bg-blue-500",
+        category: AppCategory.MEDIA,
+        defaultSize: { width: 800, height: 500 },
+        minSize: { width: 400, height: 300 },
+        defaultPosition: { x: 100, y: 50 },
+        component:() => <DynamicWebApp app={{
+            id: AppId.TELEGRAM,
+            name: 'Telegram',
+            type: "link",
+            url: 'https://t.me/huuhieu17',
+            icon: 'film',
+            color: "bg-blue-500",
+            allowFullscreen: true,
+        }} />,
     },
     [AppId.DRIVE]: {
         id: AppId.DRIVE,
@@ -182,12 +270,10 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
 
 export const DOCK_APPS: AppId[] = [
     AppId.FINDER,
-    // AppId.MAIL,
     AppId.SAFARI,
-    // AppId.MESSAGES,
     AppId.NOTES,
     AppId.CALCULATOR,
-    // AppId.TERMINAL,
+    AppId.TERMINAL, 
     AppId.SETTINGS,
 ]
 

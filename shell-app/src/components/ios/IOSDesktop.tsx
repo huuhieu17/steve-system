@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useWindowManager } from "@/hooks/useWindowManager"
 import DynamicWebApp from "../apps/DynamicWebApp"
 import IOSHomeScreen from "./IOSHomeScreen"
 import IOSCalculatorApp from "./apps/IOSCalculatorApp"
@@ -11,18 +11,18 @@ import IOSSafariApp from "./apps/IOSSafariApp"
 import IOSSettingsApp from "./apps/IOSSettingsApp"
 
 export default function IOSDesktop() {
-  const [currentApp, setCurrentApp] = useState<string | null>(null)
-
+  const { currentIOSApp, setCurrentIOSApp } = useWindowManager();
+  
   const openApp = (appId: string) => {
-    setCurrentApp(appId)
+    setCurrentIOSApp(appId)
   }
 
   const closeApp = () => {
-    setCurrentApp(null)
+    setCurrentIOSApp(null)
   }
 
   const renderApp = () => {
-    switch (currentApp) {
+    switch (currentIOSApp) {
       case "settings":
         return <IOSSettingsApp onClose={closeApp} />
       case "notes":
@@ -57,11 +57,51 @@ export default function IOSDesktop() {
         return <IOSMailApp onClose={closeApp} />
       case "safari":
         return <IOSSafariApp onClose={closeApp} />
+      case "comic":
+        return <DynamicWebApp app={{
+          id: 'comic',
+          url: 'https://comic.imsteve.dev',
+          name: 'Đọc Truyện',
+          type: "iframe",
+          icon: 'book-open',
+          color: "bg-gradient-to-br from-yellow-400 to-red-500",
+          allowFullscreen: true,
+        }} onClose={closeApp} />
+      case "facebook":
+        return <DynamicWebApp app={{
+          id: 'facebook',
+          url: 'https://facebook.com/huuhieu2001',
+          name: 'Facebook',
+          type: "link",
+          icon: 'facebook',
+          color: "bg-blue-600",
+          allowFullscreen: true,
+        }} onClose={closeApp} />
+      case "github":
+        return <DynamicWebApp app={{
+          id: 'github',
+          url: 'https://github.com/huuhieu17',
+          name: 'GitHub',
+          type: "link",
+          icon: 'github',
+          color: "bg-gray-800",
+          allowFullscreen: true,
+        }} onClose={closeApp} />
+      case "telegram":
+        return <DynamicWebApp app={{
+          id: 'telegram',
+          url: 'https://t.me/huuhieu17',
+          name: 'Telegram',
+          type: "link",
+          icon: 'telegram',
+          color: "bg-blue-500",
+          allowFullscreen: true,
+        }} onClose={closeApp} />
       default:
         return (
           <div className="h-screen w-full bg-white flex items-center justify-center">
             <div className="text-center p-8">
-              <h2 className="text-xl font-bold mb-2">{currentApp && currentApp?.charAt(0).toUpperCase() + currentApp?.slice(1)}</h2>
+              <h2 className="text-xl font-bold mb-2">{currentIOSApp && currentIOSApp?.charAt(0).toUpperCase() + currentIOSApp?.slice(1)}</h2>
               <p className="text-gray-600 mb-4">Ứng dụng này đang được phát triển.</p>
               <button className="px-4 py-2 bg-blue-500 text-white rounded-lg" onClick={closeApp}>
                 Quay lại
@@ -74,7 +114,7 @@ export default function IOSDesktop() {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      {currentApp ? renderApp() : <IOSHomeScreen onOpenApp={openApp} />}
+      {currentIOSApp && currentIOSApp !== null ? renderApp() : <IOSHomeScreen onOpenApp={openApp} />}
     </div>
   )
 }

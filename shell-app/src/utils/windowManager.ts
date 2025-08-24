@@ -11,11 +11,30 @@ export class WindowManager {
 
   private listeners: Array<(state: WindowManagerState) => void> = []
 
+  private currentIOSApp: string | null = null
+  private iosListeners: Array<(app: string | null) => void> = []
+
   constructor() {
     this.state = {
       windows: [],
       focusedWindowId: null,
       nextZIndex: 10,
+    }
+  }
+
+    setCurrentIOSApp(app: string | null) {
+    this.currentIOSApp = app
+    this.iosListeners.forEach((listener) => listener(app))
+  }
+
+  getCurrentIOSApp() {
+    return this.currentIOSApp
+  }
+
+  subscribeCurrentIOSApp(listener: (app: string | null) => void) {
+    this.iosListeners.push(listener)
+    return () => {
+      this.iosListeners = this.iosListeners.filter((l) => l !== listener)
     }
   }
 

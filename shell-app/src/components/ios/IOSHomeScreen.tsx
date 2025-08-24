@@ -1,12 +1,16 @@
 "use client"
 
 import {
+  BookOpen,
   Calculator,
+  Compass,
+  Facebook,
   Files,
   Film,
-  Globe,
+  Github,
   StickyNoteIcon as Notes,
   ImagesIcon as Photos,
+  Send,
   Settings
 } from "lucide-react"
 import { useState } from "react"
@@ -26,16 +30,20 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       // { id: "phone", name: "Phone", icon: Phone, color: "bg-green-500" },
       // { id: "messages", name: "Messages", icon: MessageSquare, color: "bg-green-400" },
       // { id: "mail", name: "Mail", icon: Mail, color: "bg-blue-500" },
-      { id: "photos", name: "Thư viện ảnh", icon: Photos, color: "bg-gradient-to-br from-yellow-400 to-orange-500" },
-      { id: "movies", name: "Xem phim", icon: Film, color: "bg-gradient-to-br from-black-400 to-red-500" },
-      { id: "safari", name: "Safari", icon: Globe, color: "bg-blue-400" },
+      { id: "photos", name: "Thư viện ảnh", icon: Photos, color: "bg-gradient-to-br from-red-400 to-pink-500" },
+      { id: "movies", name: "Xem phim", icon: Film, color: "bg-gradient-to-br from-black-400 to-green-500" },
+      { id: "comic", name: "Đọc truyện", icon: BookOpen, color: "bg-gradient-to-br from-yellow-400 to-red-500" },
+      { id: "facebook", name: "Facebook", icon: Facebook, color: "bg-blue-500" },
+      { id: "github", name: "Github", icon: Github, color: "bg-gray-800" },
+      { id: "telegram", name: "Telegram", icon: Send, color: "bg-blue-400" },
       // { id: "music", name: "Music", icon: Music, color: "bg-red-500" },
       // { id: "camera", name: "Camera", icon: Camera, color: "bg-gray-600" },
-     
+
       // { id: "clock", name: "Clock", icon: Clock, color: "bg-black" },
       // { id: "weather", name: "Weather", icon: Weather, color: "bg-blue-600" },
       // { id: "maps", name: "Maps", icon: Maps, color: "bg-green-600" },
       // { id: "calendar", name: "Calendar", icon: Calendar, color: "bg-red-600" },
+      { id: "safari", name: "Safari", icon: Compass, color: "bg-blue-500" },
       { id: "notes", name: "Notes", icon: Notes, color: "bg-yellow-400" },
       // { id: "contacts", name: "Contacts", icon: Contacts, color: "bg-gray-500" },
       { id: "calculator", name: "Calculator", icon: Calculator, color: "bg-gray-800" },
@@ -46,13 +54,11 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
 
   const dockApps = [
     // { id: "phone", name: "Phone", icon: Phone, color: "bg-green-500" },
-    { id: "photos", name: "Photos", icon: Photos, color: "bg-gradient-to-br from-yellow-400 to-orange-500" },
-    { id: "safari", name: "Safari", icon: Globe, color: "bg-blue-400" },
-    { id: "notes", name: "Notes", icon: Notes, color: "bg-yellow-400" },
-    { id: "calculator", name: "Calculator", icon: Calculator, color: "bg-gray-800" },
-    { id: "settings", name: "Settings", icon: Settings, color: "bg-gray-600" },
-    // { id: "messages", name: "Messages", icon: MessageSquare, color: "bg-green-400" },
-    // { id: "music", name: "Music", icon: Music, color: "bg-red-500" },
+    { id: "photos", name: "Thư viện ảnh", icon: Photos, color: "bg-gradient-to-br from-red-400 to-pink-500" },
+    { id: "comic", name: "Đọc truyện", icon: BookOpen, color: "bg-gradient-to-br from-yellow-400 to-red-500" },
+    { id: "facebook", name: "Facebook", icon: Facebook, color: "bg-blue-500" },
+    { id: "github", name: "Github", icon: Github, color: "bg-gray-800" },
+    { id: "telegram", name: "Telegram", icon: Send, color: "bg-blue-400" },
   ]
 
   return (
@@ -61,7 +67,7 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=400')] bg-cover bg-center opacity-30" />
 
       {/* Dynamic Island */}
-      {/* <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-2xl z-10" /> */}
+      <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-2xl z-10" />
 
       {/* Status Bar */}
       <IOSStatusBar />

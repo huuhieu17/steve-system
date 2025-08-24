@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { useWindowManager } from "@/hooks/useWindowManager"
 import { Code, ExternalLink, Globe, Maximize, Minimize, RefreshCw } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import type { DynamicApp } from "./DynamicAppManager"
@@ -12,6 +13,7 @@ interface DynamicWebAppProps {
 
 export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
 
+  const windowManager = useWindowManager();
 
   const [isLoading, setIsLoading] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -107,6 +109,13 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
         </div>
       </div>
     )
+  }
+
+  if (app.type === "link" && app.url) {
+    window.open(app.url, "_blank");
+    if(onClose){
+      onClose();
+    }
   }
 
   return (
