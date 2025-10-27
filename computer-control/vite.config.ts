@@ -5,13 +5,17 @@ export default defineConfig({
   plugins: [
     react(),
     federation  ({
-      name: 'react_app',
+      name: 'computer_control_app',
       filename: 'remoteEntry.js',
       exposes: {
-        './ReactPage': './src/ReactPage.tsx',
+        './ComputerControlMicroApp': './src/App.tsx',
       },
+      shared: ['react', 'react-dom'],
     }),
   ],
+  server: {
+    port: 5174
+  },
   build: {
     target: 'esnext',
     minify: false,
