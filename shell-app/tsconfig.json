@@ -29,5 +29,5 @@
       ]
     }
   },
-  "include": ["src"] // This tells TypeScript which files to include in the compilation.
+  "include": ["src", "src/types"] // This tells TypeScript which files to include in the compilation.
 }

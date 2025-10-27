@@ -1,8 +1,7 @@
 import React from 'react'
 
-type Props = {}
 const ComputerControlMicroApp = React.lazy(() => import('ComputerControlMicroApp/ComputerControlMicroApp'))
-const ComputerControlApp = (props: Props) => {
+const ComputerControlApp = () => {
   return (
     <div>
       <h2>Computer Control</h2>
