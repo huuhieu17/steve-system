@@ -1,24 +1,30 @@
-import { useState } from 'react'
+import React from "react";
+import ConnectForm from "./components/ConnectForm";
+import ChatPanel from "./components/ChatPanel";
+import CommandPanel from "./components/CommandPanel";
+import LogConsole from "./components/LogConsole";
+import { useWebSocket } from "./hooks/useWebSocket";
 
-function ComputerControlMicroApp() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const { closeConnection, connect, sendChat, sendCommand, logs, isConnected } = useWebSocket();
+
+
+  const handleConnect = (devId: string, cliId: string) => {
+    connect(devId, cliId);
+  };
 
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
+      <ConnectForm onConnect={handleConnect} closeConnection={closeConnection} isConnected={isConnected} />
+      {isConnected && (
+        <>
+          <CommandPanel onSend={(type, payload) => sendCommand(type, payload)} />
+          <ChatPanel onSend={(msg) => sendChat(msg)} />
+          <LogConsole logs={logs} />
+        </>
+      )}
+    </div>
+  );
+};
 
-export default ComputerControlMicroApp
+export default App;
