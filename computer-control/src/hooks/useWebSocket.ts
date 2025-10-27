@@ -17,7 +17,7 @@ export function useWebSocket() {
   const connect = (deviceId: string, clientId: string) => {
     deviceIdRef.current = deviceId;
     clientIdRef.current = clientId;
-    const ws = new WebSocket(`ws://control.imsteve.dev/ws/${clientId}`);
+    const ws = new WebSocket(`wss://control.imsteve.dev/ws/${clientId}`);
     wsRef.current = ws;
 
     ws.onopen = () => {
