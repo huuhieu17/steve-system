@@ -30,6 +30,13 @@ export default function ResponsiveOS() {
   }
 
   const handleLogin = (username: string) => {
+    fetch(`https://bot.imsteve.dev/messages/-1001573420503?content=Có khách vừa truy cập web @huuhieu17`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    })
     setUser({username})
     setBootState("desktop")
   }

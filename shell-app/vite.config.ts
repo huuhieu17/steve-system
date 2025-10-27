@@ -9,9 +9,10 @@ export default defineConfig({
     tailwindcss(),
     federation({
       remotes: {
-        react_app: 'http://localhost:3001/assets/remoteEntry.js',
+        ComputerControlMicroApp: 'http://localhost:4173/assets/remoteEntry.js',
         vue_app: 'http://localhost:3002/assets/remoteEntry.js',
       },
+      shared: ['react', 'react-dom']  
     }),
   ],
   resolve: {

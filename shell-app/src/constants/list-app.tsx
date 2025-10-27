@@ -1,4 +1,5 @@
 import CalculatorApp from "@/components/apps/CalculatorApp"
+import ComputerControlApp from "@/components/apps/ComputerControlApp"
 import DynamicWebApp from "@/components/apps/DynamicWebApp"
 import FinderApp from "@/components/apps/FinderApp"
 import NotesApp from "@/components/apps/NotesApp"
@@ -11,6 +12,7 @@ import {
     Calculator,
     Calendar,
     Camera,
+    Computer,
     Facebook,
     FileText,
     Film,
@@ -266,6 +268,17 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         defaultPosition: { x: 220, y: 140 },
         component: () => <div className="p-4">Contacts App (Coming Soon)</div>,
     },
+    [AppId.COMPUTER_CONTROL]: {
+        id: AppId.COMPUTER_CONTROL,
+        name: "Computer Control",
+        icon: <Computer className="w-6 h-6 text-white" />,
+        color: "bg-gray-500",
+        category: AppCategory.PRODUCTIVITY,
+        defaultSize: { width: 600, height: 400 },
+        minSize: { width: 300, height: 200 },
+        defaultPosition: { x: 220, y: 140 },
+        component: () => <ComputerControlApp />,
+    },
 }
 
 export const DOCK_APPS: AppId[] = [
@@ -292,4 +305,9 @@ export const DESKTOP_APPS: AppId[] = [
     AppId.CONTACTS,
     AppId.MOVIES,
     AppId.DRIVE,
+    AppId.COMIC,
+    AppId.FACEBOOK,
+    AppId.GITHUB,
+    AppId.TELEGRAM,
+    AppId.COMPUTER_CONTROL,
 ]

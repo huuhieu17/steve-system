@@ -9,6 +9,7 @@ import IOSMailApp from "./apps/IOSMailApp"
 import IOSNotesApp from "./apps/IOSNotesApp"
 import IOSSafariApp from "./apps/IOSSafariApp"
 import IOSSettingsApp from "./apps/IOSSettingsApp"
+import IOSComputerControlApp from "./apps/IOSComputerControlApp"
 
 export default function IOSDesktop() {
   const { currentIOSApp, setCurrentIOSApp } = useWindowManager();
@@ -25,6 +26,8 @@ export default function IOSDesktop() {
     switch (currentIOSApp) {
       case "settings":
         return <IOSSettingsApp onClose={closeApp} />
+      case "computer-control":
+        return <IOSComputerControlApp onClose={closeApp} />
       case "notes":
         return <IOSNotesApp onClose={closeApp} />
       case "calculator":
