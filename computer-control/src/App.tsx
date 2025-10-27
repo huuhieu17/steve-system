@@ -20,9 +20,9 @@ const App: React.FC = () => {
         <>
           <CommandPanel onSend={(type, payload) => sendCommand(type, payload)} />
           <ChatPanel onSend={(msg) => sendChat(msg)} />
-          <LogConsole logs={logs} />
         </>
       )}
+      <LogConsole logs={logs} />
     </div>
   );
 };
