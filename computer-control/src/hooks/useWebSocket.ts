@@ -71,9 +71,7 @@ export function useWebSocket() {
       client_id: clientIdRef.current,
       type: "chat",
       to: deviceIdRef.current,
-      payload: {
-        message,
-      },
+      message
     };
     wsRef.current.send(JSON.stringify(msg));
     appendLog(`💬 Sent chat: ${message}`);
