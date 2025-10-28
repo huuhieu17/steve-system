@@ -40,9 +40,9 @@ export function useWebSocket() {
           appendLog(`✅ Connected to device ${deviceId}`);
           return;
         }
-        appendLog(`📩 ${JSON.stringify(msg)}`);
+        appendLog(`${JSON.stringify(msg)}`);
       } catch {
-        appendLog(`📩 Raw: ${event.data}`);
+        appendLog(`${event.data}`);
       }
     };
   };
@@ -86,7 +86,60 @@ export function useWebSocket() {
     }
   };
 
-  const appendLog = (msg: string) => setLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] ${msg}`]);
+  const appendLog = (msg: string) => {
+    try {
+      const parsed = JSON.parse(msg);
+
+      // 🗨️ Chat message
+      if (parsed.type === "chat") {
+        setLogs((prev) => [
+          ...prev,
+          `[${new Date().toLocaleTimeString()}] 💬 ${parsed.from}: ${parsed.message}`,
+        ]);
+        return;
+      }
+
+      if (parsed.type === "pong") {
+        setLogs((prev) => [
+          ...prev,
+          `[${new Date().toLocaleTimeString()}] <span style="color: green">🏓 Ping received from ${parsed.from || "unknown"}</span>`,
+        ]);
+        return;
+      }
+      if (parsed.type === "error") {
+        setLogs((prev) => [
+          ...prev,
+          `[${new Date().toLocaleTimeString()}] <span style="color: red">❌ Error: ${parsed.message}</span>`,
+        ]);
+        return;
+      }
+
+      // 🖼️ Screenshot (base64)
+      if (parsed.type === "screenshot" && parsed.image) {
+        const imageHtml = `<img src="data:image/png;base64,${parsed.image}" 
+                             alt="screenshot" 
+                             style="max-width:200px;border-radius:6px;border:1px solid #ddd;margin-top:4px"/>`;
+
+        setLogs((prev) => [
+          ...prev,
+          `[${new Date().toLocaleTimeString()}] 🖼️ Screenshot received from ${parsed.from || "unknown"}: ${imageHtml}`,
+        ]);
+        return;
+      }
+
+      // Loại khác (hoặc không có type)
+      setLogs((prev) => [
+        ...prev,
+        `[${new Date().toLocaleTimeString()}] ${msg}`,
+      ]);
+    } catch (e) {
+      setLogs((prev) => [
+        ...prev,
+        `[${new Date().toLocaleTimeString()}] ${msg}`,
+      ]);
+    }
+  };
+
 
   return { connect, sendCommand, sendChat, closeConnection, logs, isConnected, deviceId: deviceIdRef.current, clientId: clientIdRef.current };
 }
