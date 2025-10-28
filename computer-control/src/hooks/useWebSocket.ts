@@ -115,8 +115,8 @@ export function useWebSocket() {
       }
 
       // 🖼️ Screenshot (base64)
-      if (parsed.type === "show_screenshot" && parsed.image) {
-        const imageHtml = `<img src="data:image/png;base64,${parsed.image}" 
+      if (parsed.type === "show_screenshot" && parsed.file) {
+        const imageHtml = `<img src="data:image/png;base64,${parsed.file}" 
                              alt="screenshot" 
                              style="max-width:200px;border-radius:6px;border:1px solid #ddd;margin-top:4px"/>`;
 
