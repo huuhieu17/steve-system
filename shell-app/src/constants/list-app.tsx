@@ -271,7 +271,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.COMPUTER_CONTROL]: {
         id: AppId.COMPUTER_CONTROL,
         name: "Computer Control",
-        icon: <Computer className="w-6 h-6 text-white" />,
+        icon: <Computer className="w-10 h-10 p-2 rounded text-white bg-gradient-to-br from-purple-400 to-pink-600" />,
         color: "bg-gray-500",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 600, height: 400 },
