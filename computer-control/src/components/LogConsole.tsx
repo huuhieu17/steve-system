@@ -5,7 +5,14 @@ interface Props {
 }
 
 const LogConsole: React.FC<Props> = ({ logs }) => (
-  <div className="mt-4 bg-black text-green-400 font-mono p-3 rounded w-[800px] h-[300px] overflow-y-auto">
+  <div className="mt-4 bg-black text-green-400 font-mono p-3 rounded overflow-y-auto"
+    style={{ 
+      height: '300px',
+      width: '100%',
+      whiteSpace: 'pre-wrap',
+      wordWrap: 'break-word',
+     }}
+    >
     {logs.map((l, i) => (
       <div key={i} className="text-white">{l}</div>
     ))}

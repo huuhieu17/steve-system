@@ -4,7 +4,6 @@ const ComputerControlMicroApp = React.lazy(() => import('ComputerControlMicroApp
 const ComputerControlApp = () => {
   return (
     <div>
-      <h2>Computer Control</h2>
       <React.Suspense fallback={<div>Launching App...</div>}>
         <ComputerControlMicroApp />
       </React.Suspense>
