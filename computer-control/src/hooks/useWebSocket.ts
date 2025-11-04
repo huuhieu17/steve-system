@@ -41,8 +41,8 @@ export function useWebSocket() {
           return;
         }
 
-        if (msg.type === "process_list") {
-          window.dispatchEvent(new CustomEvent("processListUpdate", { detail: msg.data }));
+        if (msg.type === "forward_list_running_process") {
+          window.dispatchEvent(new CustomEvent("processListUpdate", { detail: msg.data?.data ?? [] }));
           appendLog(`📋 Received process list (${msg.data.length} items)`);
           return;
         }
