@@ -33,6 +33,7 @@ const ProcessListPanel: React.FC<Props> = ({ onSendCommand }) => {
   const killProcess = (pid: number) => {
     if (confirm(`Bạn có chắc muốn kill process ${pid}?`)) {
       onSendCommand("kill_process", { pid });
+      fetchProcesses();
     }
   };
 
