@@ -4,11 +4,13 @@ import ChatPanel from "./components/ChatPanel";
 import CommandPanel from "./components/CommandPanel";
 import LogConsole from "./components/LogConsole";
 import { useWebSocket } from "./hooks/useWebSocket";
+import ProcessListPanel from "./components/ProcessListPanel";
 
 const tabs = [
   { id: "connect", label: "Connect" },
   { id: "command", label: "Commands", requiresConnection: true },
   { id: "chat", label: "Chat", requiresConnection: true },
+  { id: "processes", label: "Processes", requiresConnection: true },
 ];
 
 const App: React.FC = () => {
@@ -70,6 +72,10 @@ const App: React.FC = () => {
         )}
 
         {activeTab === "chat" && isConnected && <ChatPanel onSend={(msg) => sendChat(msg)} />}
+
+        {activeTab === "processes" && isConnected && (
+          <ProcessListPanel onSendCommand={sendCommand} />
+        )}
       </div>
 
       {/* --- Console luôn hiển thị --- */}

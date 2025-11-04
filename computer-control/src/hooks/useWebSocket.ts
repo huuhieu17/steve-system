@@ -40,6 +40,12 @@ export function useWebSocket() {
           appendLog(`✅ Connected to device ${deviceId}`);
           return;
         }
+
+        if (msg.type === "process_list") {
+          window.dispatchEvent(new CustomEvent("processListUpdate", { detail: msg.data }));
+          appendLog(`📋 Received process list (${msg.data.length} items)`);
+          return;
+        }
         appendLog(`${JSON.stringify(msg)}`);
       } catch {
         appendLog(`${event.data}`);
