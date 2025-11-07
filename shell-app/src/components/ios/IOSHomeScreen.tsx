@@ -68,9 +68,6 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       {/* Wallpaper */}
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=400')] bg-cover bg-center opacity-30" />
 
-      {/* Dynamic Island */}
-      <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-2xl z-10" />
-
       {/* Status Bar */}
       <IOSStatusBar />
 

@@ -1,5 +1,6 @@
 "use client"
 
+import { Wifi } from "lucide-react"
 import { useState, useEffect } from "react"
 
 export default function IOSStatusBar() {
@@ -27,15 +28,17 @@ export default function IOSStatusBar() {
       <div>{time}</div>
       <div className="flex items-center space-x-1">
         {/* Signal bars */}
-        <div className="flex space-x-0.5 rotate-180">
-          <div className="w-1 h-2 bg-white rounded-full" />
-          <div className="w-1 h-3 bg-white rounded-full" />
-          <div className="w-1 h-4 bg-white rounded-full" />
-          <div className="w-1 h-4 bg-white rounded-full" />
+        <div>
+          <Wifi className="w-6 h-5" />
         </div>
-        {/* Battery */}
-        <div className="w-6 h-3 border border-white rounded-sm relative">
-          <div className="w-4 h-1.5 bg-white rounded-sm m-0.5" />
+        <div className="flex space-x-0.5 rotate-180">
+          <div className="w-1 h-4 bg-white rounded-full" />
+          <div className="w-1 h-3 bg-white rounded-full" />
+          <div className="w-1 h-2 bg-white rounded-full" />
+          <div className="w-1 h-1 bg-white rounded-full" />
+        </div>
+        <div className="w-7 h-4 border border-white rounded-sm relative">
+          <div className="w-2/3 h-2.5 bg-white m-0.5" />
           <div className="absolute -right-0.5 top-1 w-0.5 h-1 bg-white rounded-r-sm" />
         </div>
       </div>

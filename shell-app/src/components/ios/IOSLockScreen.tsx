@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { ChevronUp, Camera, Flashlight, User } from "lucide-react"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Camera, Fingerprint, Flashlight, User } from "lucide-react"
+import { useEffect, useState } from "react"
 
 interface IOSLockScreenProps {
   onUnlock: () => void
@@ -143,12 +143,12 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center space-y-4">
-            <div className="text-white text-sm mb-2">Vuốt lên để tiếp tục với Guest</div>
+            <div className="text-white text-sm mb-2">Mở khoá để truy cập các chức năng</div>
             <button
               className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center transition-transform duration-200 active:scale-95"
               onClick={handleGuestUnlock}
             >
-              <ChevronUp className="w-8 h-8 text-white" />
+              <Fingerprint className="w-8 h-8 text-white" />
             </button>
 
             <Button
