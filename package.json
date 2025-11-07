@@ -4,6 +4,7 @@
   "scripts": {
     "build": "npm run build:computer-control && npm run build:shell",
     "build:computer-control": "cd computer-control && npm run build",
-    "build:shell": "cd shell-app && npm run build"
+    "build:shell": "cd shell-app && npm run build",
+    "start": "cd shell-app && yarn dev"
   }
 }

@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils"
 interface WindowProps {
   id: string
   title: string
-  icon?: React.ReactNode
   initialPosition?: { x: number; y: number }
   initialSize?: { width: number; height: number }
   minSize?: { width: number; height: number }
@@ -22,7 +21,6 @@ interface WindowProps {
 export default function Window({
   id,
   title,
-  icon,
   initialPosition = { x: 100, y: 50 },
   initialSize = { width: 800, height: 500 },
   minSize = { width: 300, height: 200 },
@@ -196,7 +194,6 @@ export default function Window({
           </div>
         </div>
         <div className="flex items-center space-x-2 text-sm font-medium text-gray-700">
-          {icon && <span className="mr-1">{icon}</span>}
           {title}
         </div>
         <div className="w-16" />
