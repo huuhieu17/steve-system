@@ -1,13 +1,12 @@
 "use client"
 
-import { useState } from "react"
-import { User, Shield, Wifi, Monitor, Bell, Globe, VolumeX, Volume2, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import DynamicAppManager, { type DynamicApp } from "./DynamicAppManager"
+import { Switch } from "@/components/ui/switch"
 import { useSystem } from "@/contexts/user-context"
+import { Bell, Globe, LogOut, Monitor, Shield, User, Volume2, VolumeX, Wifi } from "lucide-react"
+import { useState } from "react"
+import DynamicAppManager, { type DynamicApp } from "./DynamicAppManager"
 
 // Thêm props cho dynamic apps
 interface SettingsAppProps {
@@ -29,14 +28,15 @@ export default function SettingsApp({
   const [darkMode, setDarkMode] = useState(false)
   // const [notifications, setNotifications] = useState(true)
   const [wifi, setWifi] = useState(true)
+  const [activeTab, setActiveTab] = useState("general");
 
   const settingsCategories = [
     { id: "general", name: "General", icon: <Globe className="w-5 h-5" /> },
     { id: "appearance", name: "Appearance", icon: <Monitor className="w-5 h-5" /> },
-    { id: "notifications", name: "Notifications", icon: <Bell className="w-5 h-5" /> },
+    // { id: "notifications", name: "Notifications", icon: <Bell className="w-5 h-5" /> },
     { id: "sound", name: "Sound", icon: <Volume2 className="w-5 h-5" /> },
     { id: "network", name: "Network", icon: <Wifi className="w-5 h-5" /> },
-    { id: "security", name: "Security", icon: <Shield className="w-5 h-5" /> },
+    // { id: "security", name: "Security", icon: <Shield className="w-5 h-5" /> },
     { id: "users", name: "Users", icon: <User className="w-5 h-5" /> },
   ]
 
@@ -48,7 +48,8 @@ export default function SettingsApp({
           {settingsCategories.map((category) => (
             <button
               key={category.id}
-              className="w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-blue-100 rounded-lg"
+              onClick={() => setActiveTab(category.id)}
+              className={`w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-blue-100 rounded-lg ${activeTab === category.id ? "bg-blue-200 font-medium" : ""}`}
             >
               {category.icon}
               <span>{category.name}</span>
@@ -59,19 +60,8 @@ export default function SettingsApp({
 
       {/* Main Content */}
       <div className="flex-1 p-6 overflow-auto">
-        <h1 className="text-2xl font-bold mb-6">System Preferences</h1>
-
-        <Tabs defaultValue="general" className="w-full">
-          <TabsList className="mb-4">
-            <TabsTrigger value="general">General</TabsTrigger>
-            <TabsTrigger value="appearance">Appearance</TabsTrigger>
-            <TabsTrigger value="sound">Sound</TabsTrigger>
-            <TabsTrigger value="network">Network</TabsTrigger>
-            <TabsTrigger value="users">Users</TabsTrigger>
-            <TabsTrigger value="apps">Apps</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="general" className="space-y-6">
+        {activeTab === "general" && (
+          <div aria-label="general" className="space-y-6">
             <div className="space-y-4">
               <h2 className="text-lg font-medium">General Settings</h2>
 
@@ -111,9 +101,10 @@ export default function SettingsApp({
                 </select>
               </div>
             </div>
-          </TabsContent>
-
-          <TabsContent value="appearance" className="space-y-6">
+          </div>
+        )}
+        {activeTab === "appearance" && (
+          <div aria-label="appearance" className="space-y-6">
             <div className="space-y-4">
               <h2 className="text-lg font-medium">Appearance Settings</h2>
 
@@ -146,9 +137,10 @@ export default function SettingsApp({
                 </div>
               </div>
             </div>
-          </TabsContent>
-
-          <TabsContent value="sound" className="space-y-6">
+          </div>
+        )}
+        {activeTab === "sound" && (
+          <div aria-label="sound" className="space-y-6">
             <div className="space-y-4">
               <h2 className="text-lg font-medium">Sound Settings</h2>
 
@@ -184,9 +176,11 @@ export default function SettingsApp({
                 <Switch defaultChecked />
               </div>
             </div>
-          </TabsContent>
+          </div>
+        )}
 
-          <TabsContent value="network" className="space-y-6">
+        {activeTab === "network" && (
+          <div aria-label="network" className="space-y-6">
             <div className="space-y-4">
               <h2 className="text-lg font-medium">Network Settings</h2>
 
@@ -202,7 +196,7 @@ export default function SettingsApp({
                 <div className="border rounded-lg p-4 space-y-2">
                   <div className="font-medium">Available Networks</div>
                   <div className="space-y-2">
-                    {["Home Network", "Office Wi-Fi", "Guest Network"].map((network) => (
+                    {["Steve Network", "Office Wi-Fi", "Guest Network"].map((network) => (
                       <div key={network} className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-md">
                         <div className="flex items-center">
                           <Wifi className="w-4 h-4 mr-2" />
@@ -225,9 +219,11 @@ export default function SettingsApp({
                 <Switch defaultChecked />
               </div>
             </div>
-          </TabsContent>
+          </div>
+        )}
 
-          <TabsContent value="users" className="space-y-6">
+        {activeTab === "users" && (
+          <div aria-label="users" className="space-y-6">
             <div className="space-y-4">
               <h2 className="text-lg font-medium">User Settings</h2>
 
@@ -248,9 +244,11 @@ export default function SettingsApp({
                 </Button>
               </div>
             </div>
-          </TabsContent>
+          </div>
+        )}
 
-          <TabsContent value="apps" className="space-y-6">
+        {activeTab === "apps" && (
+          <div aria-label="apps" className="space-y-6">
             <div className="space-y-4">
               <h2 className="text-lg font-medium">Dynamic Apps Management</h2>
               <p className="text-sm text-gray-600">
@@ -266,8 +264,8 @@ export default function SettingsApp({
                 />
               )}
             </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+        )}
       </div>
     </div>
   )
