@@ -12,13 +12,13 @@ import {
     Calculator,
     Calendar,
     Camera,
+    Compass,
     Computer,
     Facebook,
     FileText,
     Film,
     Folder,
     Github,
-    Globe,
     HardDrive,
     Mail,
     MessageSquare,
@@ -88,7 +88,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.SAFARI]: {
         id: AppId.SAFARI,
         name: "Safari",
-        icon: <Globe className="w-6 h-6 text-white" />,
+        icon: <Compass className="w-6 h-6 text-white" />,
         color: "bg-gradient-to-br from-blue-400 to-blue-600",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 900, height: 600 },
@@ -270,9 +270,9 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     },
     [AppId.COMPUTER_CONTROL]: {
         id: AppId.COMPUTER_CONTROL,
-        name: "Computer Control",
+        name: "Điều khiển máy tính",
         icon: <Computer className="w-10 h-10 p-2 rounded text-white bg-gradient-to-br from-purple-400 to-pink-600" />,
-        color: "bg-gray-500",
+        color: "bg-pink-600",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 600, height: 400 },
         minSize: { width: 300, height: 200 },
@@ -282,6 +282,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
 }
 
 export const DOCK_APPS: AppId[] = [
+    AppId.COMPUTER_CONTROL,
     AppId.FINDER,
     AppId.SAFARI,
     AppId.NOTES,

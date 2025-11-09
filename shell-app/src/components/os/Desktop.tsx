@@ -84,7 +84,6 @@ export default function Desktop({ }: DesktopProps) {
               key={window.id}
               id={window.id}
               title={window.title}
-              icon={window.icon}
               initialPosition={window.position}
               initialSize={window.size}
               minSize={window.minSize}

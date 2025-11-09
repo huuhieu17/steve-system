@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { useSystem } from "@/contexts/user-context"
-import { Bell, Globe, LogOut, Monitor, Shield, User, Volume2, VolumeX, Wifi } from "lucide-react"
+import { Globe, LogOut, Monitor, User, Volume2, VolumeX, Wifi } from "lucide-react"
 import { useState } from "react"
 import DynamicAppManager, { type DynamicApp } from "./DynamicAppManager"
 
