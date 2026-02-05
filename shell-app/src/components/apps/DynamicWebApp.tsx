@@ -174,6 +174,7 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
             onLoad={handleIframeLoad}
             onError={handleIframeError}
             title={app.name}
+            allowfullscreen
           />
         )}
       </div>
