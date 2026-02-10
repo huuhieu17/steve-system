@@ -13,7 +13,7 @@ export default function MovieApp() {
                 if (!containerRef.current) return;
                 
                 const { mount, unmount } = mod.default;
-                mount(containerRef.current, { apiBaseUrl: import.meta.env.VITE_MOVIE_API_APP, routerBase: "/", routerMode: "memory", });
+                mount(containerRef.current, {  routerBase: "/", routerMode: "memory", });
                 unmountVue = unmount;
             } catch (err) {
                 console.error("Failed to load remote MovieApp:", err);
