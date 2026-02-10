@@ -32,7 +32,7 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       // { id: "messages", name: "Messages", icon: MessageSquare, color: "bg-green-400" },
       // { id: "mail", name: "Mail", icon: Mail, color: "bg-blue-500" },
       { id: "photos", name: "Thư viện ảnh", icon: Photos, color: "bg-gradient-to-br from-red-400 to-pink-500" },
-      { id: "movies", name: "Xem phim", icon: Film, color: "bg-gradient-to-br from-black-400 to-green-500" },
+      { id: "movie", name: "Xem phim", icon: Film, color: "bg-gradient-to-br from-black-400 to-green-500" },
       { id: "comic", name: "Đọc truyện", icon: BookOpen, color: "bg-gradient-to-br from-yellow-400 to-red-500" },
       { id: "computer-control", name: "Điều khiển máy tính", icon: Computer, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
       { id: "facebook", name: "Facebook", icon: Facebook, color: "bg-blue-500" },
@@ -51,6 +51,7 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       { id: "calculator", name: "Calculator", icon: Calculator, color: "bg-gray-800" },
       { id: "settings", name: "Settings", icon: Settings, color: "bg-gray-600" },
       { id: "files", name: "Files", icon: Files, color: "bg-blue-500" },
+ 
     ],
   ]
 

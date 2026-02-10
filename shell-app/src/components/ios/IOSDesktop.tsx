@@ -10,6 +10,7 @@ import IOSNotesApp from "./apps/IOSNotesApp"
 import IOSSafariApp from "./apps/IOSSafariApp"
 import IOSSettingsApp from "./apps/IOSSettingsApp"
 import IOSComputerControlApp from "./apps/IOSComputerControlApp"
+import IOSMovieApp from "./apps/IOSMovieApp"
 
 export default function IOSDesktop() {
   const { currentIOSApp, setCurrentIOSApp } = useWindowManager();
@@ -100,6 +101,8 @@ export default function IOSDesktop() {
           color: "bg-blue-500",
           allowFullscreen: true,
         }} onClose={closeApp} />
+      case "movie":
+        return <IOSMovieApp onClose={closeApp} />
       default:
         return (
           <div className="h-screen w-full bg-white flex items-center justify-center">

@@ -1,6 +1,29 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import '@/assets/remote-wrapper.css'
 export default function MovieApp() {
     const containerRef = useRef(null)
+    const [isScrolled, setIsScrolled] =  useState(false);
+
+    const handleScroll = (target: any) => {
+        console.log("scroll event detected in MovieApp wrapper");
+        if (!target) return;
+        
+        const scrollTop = target.scrollTop || document.documentElement.scrollTop;
+        setIsScrolled(scrollTop > 50); // Adjust the threshold as needed
+    };
+
+    useEffect(() => {
+        document.addEventListener(
+            "scroll",
+            (e) => {
+                handleScroll(e.target);
+            },
+            true // 👈 capture = true
+        );
+        return () => {
+            document.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     useEffect(() => {
         let unmountVue: (() => void) | undefined;
@@ -27,8 +50,10 @@ export default function MovieApp() {
         };
     }, []);
 
+
+
     return (
-        <div className="w-full h-full relative">
+        <div className={`w-full h-full relative movie-remote-wrapper ${isScrolled ? 'scrolled' : ''}`}>
             <div ref={containerRef}></div>
         </div>
     )

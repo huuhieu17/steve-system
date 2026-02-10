@@ -1,0 +1,12 @@
+.movie-remote-wrapper {
+  position: relative;
+  /* ensure a positioned ancestor */
+  /* creates a containing block for fixed descendants */
+  isolation: isolate;
+  transform: translateZ(0);
+  /* optional: isolate stacking context */
+  width: 100%;
+  height: 100%;
+}
+
+.movie-remote-wrapper.scrolled {}

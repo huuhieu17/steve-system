@@ -181,7 +181,7 @@ export default function Window({
     >
       {/* Window Title Bar */}
       <div
-        className="h-8 bg-gray-100/80 border-b border-gray-200/50 flex items-center justify-between px-4"
+        className="z-[1000] h-8 bg-gray-100/80 border-b border-gray-200/50 flex items-center justify-between px-4"
         onMouseDown={handleTitleMouseDown}
         onDoubleClick={handleDoubleClick}
         data-draggable="true"

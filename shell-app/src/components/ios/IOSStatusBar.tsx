@@ -37,10 +37,7 @@ export default function IOSStatusBar() {
           <div className="w-1 h-2 bg-white rounded-full" />
           <div className="w-1 h-1 bg-white rounded-full" />
         </div>
-        <div className="w-7 h-4 border border-white rounded-sm relative">
-          <div className="w-2/3 h-2.5 bg-white m-0.5" />
-          <div className="absolute -right-0.5 top-1 w-0.5 h-1 bg-white rounded-r-sm" />
-        </div>
+     
       </div>
     </div>
   )

@@ -53,9 +53,7 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
             <div className="w-1 h-1 bg-white rounded-full" />
             <div className="w-1 h-1 bg-white rounded-full" />
           </div>
-          <div className="w-6 h-3 border border-white rounded-sm">
-            <div className="w-4 h-1.5 bg-white rounded-sm m-0.5" />
-          </div>
+          
         </div>
       </div>
 

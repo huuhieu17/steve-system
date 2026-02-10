@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import ResponsiveOS from './components/ResponsiveOS'
 import './main.css'
 
@@ -10,6 +10,7 @@ export default function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<ResponsiveOS />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
           {/* <Route path="/react" element={<ReactPage />} />
           <Route path="/vue" element={<VuePage />} /> */}
         </Routes>
