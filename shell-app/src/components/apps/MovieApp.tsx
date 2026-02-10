@@ -7,7 +7,9 @@ export default function MovieApp() {
 
         (async () => {
             try {
+                await import("MovieApp/remote-styles");
                 const mod = await import("MovieApp/remote-app");
+                
                 if (!containerRef.current) return;
                 
                 const { mount, unmount } = mod.default;
@@ -25,5 +27,9 @@ export default function MovieApp() {
         };
     }, []);
 
-    return <div ref={containerRef}></div>
+    return (
+        <div className="w-full h-full relative">
+            <div ref={containerRef}></div>
+        </div>
+    )
 }

@@ -9,4 +9,8 @@ declare module "MovieApp/remote-app" {
   export function mount(container: HTMLElement, props?: Record<string, any>): void;
   export function unmount(): void;
 }
+
+declare module "MovieApp/remote-styles" {
+
+}
 // ...existing code...
