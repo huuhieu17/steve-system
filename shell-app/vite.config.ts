@@ -11,7 +11,7 @@ export default defineConfig({
       remotes: {
         ComputerControlMicroApp: 'https://cc.imsteve.dev/assets/remoteEntry.js',
         vue_app: 'http://localhost:3002/assets/remoteEntry.js',
-        MovieApp: 'https://movie.imsteve.dev//assets/remoteEntry.js',
+        MovieApp: 'https://movie.imsteve.dev/assets/remoteEntry.js',
       },
       shared: ['react', 'react-dom']  
     }),
