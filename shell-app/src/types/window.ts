@@ -67,6 +67,7 @@ export enum AppId {
   GITHUB = "github",
   COMIC = "comic",
   COMPUTER_CONTROL = "computer_control",
+  MOVIE = "movie",
 }
 
 export interface WindowManagerState {

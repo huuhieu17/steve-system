@@ -2,6 +2,7 @@ import CalculatorApp from "@/components/apps/CalculatorApp"
 import ComputerControlApp from "@/components/apps/ComputerControlApp"
 import DynamicWebApp from "@/components/apps/DynamicWebApp"
 import FinderApp from "@/components/apps/FinderApp"
+import MovieApp from "@/components/apps/MovieApp"
 import NotesApp from "@/components/apps/NotesApp"
 import PhotoApp from "@/components/apps/PhotoApp"
 import SafariAppOptimized from "@/components/apps/SafariApp"
@@ -279,6 +280,18 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         defaultPosition: { x: 220, y: 140 },
         component: () => <ComputerControlApp />,
     },
+    [AppId.MOVIE]: {
+        id: AppId.MOVIE,
+        name: "Movie",
+        icon: <Film className="w-10 h-10 p-2 rounded text-white bg-gradient-to-br from-red-400 to-orange-600" />,
+        color: "bg-orange-600",
+        category: AppCategory.MEDIA,
+        defaultSize: { width: 800, height: 500 },
+        minSize: { width: 400, height: 300 },
+        defaultPosition: { x: 150, y: 150 },
+        component: () => <MovieApp />,
+    },
+    
 }
 
 export const DOCK_APPS: AppId[] = [
@@ -311,4 +324,5 @@ export const DESKTOP_APPS: AppId[] = [
     AppId.GITHUB,
     AppId.TELEGRAM,
     AppId.COMPUTER_CONTROL,
+    AppId.MOVIE,
 ]

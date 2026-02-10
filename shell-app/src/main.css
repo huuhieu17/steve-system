@@ -32,6 +32,9 @@
   --color-ios-gray-700: #48484A;
   --color-ios-gray-800: #3A3A3C;
   --color-ios-gray-900: #1C1C1E;
+  --color-primary: #2b7cee;
+  --color-dark: #101822;
+  --color-light: #f6f7f8;
 
   /* Custom fonts */
   --font-family-sf-pro: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
