@@ -38,8 +38,8 @@ const ProcessListPanel: React.FC<Props> = ({ onSendCommand }) => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-3">
+    <div className="lg:col-span-4 bg-white dark:bg-[#1c2027] rounded-xl p-2 shadow-xl border border-gray-200 dark:border-[#282f39]">
+      <div className=" flex justify-between items-center ">
         <h2 className="text-lg font-semibold">Process List</h2>
         <button
           onClick={fetchProcesses}

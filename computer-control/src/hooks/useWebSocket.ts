@@ -19,7 +19,6 @@ export function useWebSocket() {
     clientIdRef.current = clientId;
     const ws = new WebSocket(`wss://control.imsteve.dev/ws/${clientId}`);
     wsRef.current = ws;
-
     ws.onopen = () => {
       ws.send(JSON.stringify({ client_id: clientId, type: "ping" }));
       ws.send(JSON.stringify({ client_id: clientId, type: "connect_agent", to: deviceId }));

@@ -1,89 +1,77 @@
-import React, { useState, useEffect } from "react";
-import ConnectForm from "./components/ConnectForm";
+import { UserCircle } from "lucide-react";
+import React from "react";
 import ChatPanel from "./components/ChatPanel";
-import CommandPanel from "./components/CommandPanel";
+import ConnectForm from "./components/ConnectForm";
 import LogConsole from "./components/LogConsole";
-import { useWebSocket } from "./hooks/useWebSocket";
+import PowerControl from "./components/PowerControl";
 import ProcessListPanel from "./components/ProcessListPanel";
+import UltilityControl from "./components/UltilityControl";
+import { useWebSocket } from "./hooks/useWebSocket";
 
-const tabs = [
-  { id: "connect", label: "Connect" },
-  { id: "command", label: "Commands", requiresConnection: true },
-  { id: "chat", label: "Chat", requiresConnection: true },
-  { id: "processes", label: "Processes", requiresConnection: true },
-];
 
 const App: React.FC = () => {
-  const { closeConnection, connect, sendChat, sendCommand, logs, isConnected } = useWebSocket();
-  const [activeTab, setActiveTab] = useState("connect");
-
-  // ✅ Khi kết nối thành công thì tự động chuyển tab sang "command"
-  useEffect(() => {
-    if (isConnected) {
-      setActiveTab("command");
-    }
-  }, [isConnected]);
+  const { closeConnection, connect, sendCommand, logs, isConnected } = useWebSocket();
 
   const handleConnect = (devId: string, cliId: string) => {
     connect(devId, cliId);
     // ❌ không set tab ở đây nữa, chờ effect bên trên xử lý khi isConnected = true
   };
 
-  const handleTabClick = (tabId: string, requiresConnection?: boolean) => {
-    if (requiresConnection && !isConnected) return; // không cho click khi chưa connect
-    setActiveTab(tabId);
-  };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+    <div className="font-display antialiased text-slate-900 dark:text-slate-100 bg-dark min-h-screen flex flex-col">
       {/* --- Tabs header --- */}
-      <div className="flex space-x-4 border-b border-gray-300 mb-2">
-        {tabs.map((tab) => {
-          const disabled = tab.requiresConnection && !isConnected;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => handleTabClick(tab.id, tab.requiresConnection)}
-              disabled={disabled}
-              className={`px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                activeTab === tab.id
-                  ? "border-b-2 border-blue-500 text-blue-600"
-                  : "text-gray-600 hover:text-blue-500"
-              } ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
-            >
-              {tab.label}
+      <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-border-dark px-4 lg:px-10 py-3 bg-background-light dark:bg-background-dark/95 backdrop-blur-sm">
+        <div className="flex items-center gap-4 text-slate-900 dark:text-white">
+          <div className="size-8 text-primary">
+            <span className="material-symbols-outlined text-[32px]"></span>
+          </div>
+          <h2 className="text-lg font-bold leading-tight tracking-tight">Remote Manager</h2>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+            <div className="w-2 h-2 rounded-full bg-green-500"></div>
+            <span className="text-xs font-medium text-green-500">System Online</span>
+          </div>
+          {isConnected && (
+            <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm" onClick={closeConnection} >
+              Disconnect
             </button>
-          );
-        })}
-      </div>
+          )}
+          <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9" data-alt="User profile avatar gradient" >
+            <UserCircle size={36} />
+          </div>
+        </div>
+      </header>
 
-      {/* --- Tab contents --- */}
-      <div className="w-full max-w-3xl bg-white rounded-lg shadow p-4 mb-4">
-        {activeTab === "connect" && (
-          <ConnectForm
-            onConnect={handleConnect}
-            closeConnection={closeConnection}
-            isConnected={isConnected}
-          />
-        )}
+      {!isConnected ? (
+        <ConnectForm
+          onConnect={handleConnect}
+          closeConnection={closeConnection}
+          isConnected={isConnected}
+        />
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4 shadow">
 
-        {activeTab === "command" && isConnected && (
-          <CommandPanel onSend={(type, payload) => sendCommand(type, payload)} />
-        )}
+          <div className="lg:col-span-3 flex flex-col gap-4">
+            <PowerControl onSend={(type, payload) => sendCommand(type, payload)} />
+            <UltilityControl onSend={(type, payload) => sendCommand(type, payload)} />
+          </div>
 
-        {activeTab === "chat" && isConnected && <ChatPanel onSend={(msg) => sendChat(msg)} />}
+          <ChatPanel />
 
-        {activeTab === "processes" && isConnected && (
           <ProcessListPanel onSendCommand={sendCommand} />
-        )}
-      </div>
+        </div>
+      )}
+
 
       {/* --- Console luôn hiển thị --- */}
-      <div className="w-full max-w-3xl">
+      <div className="w-full">
         <LogConsole logs={logs} />
       </div>
     </div>
   );
-};
+}
+
 
 export default App;
