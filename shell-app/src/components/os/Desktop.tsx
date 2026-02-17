@@ -19,19 +19,16 @@ export default function Desktop({ }: DesktopProps) {
     APP_CONFIGS.photos,
     APP_CONFIGS.computer_control,
     APP_CONFIGS.comic,
+    APP_CONFIGS.GAME2048,
+    APP_CONFIGS.GAMEMario,
+    APP_CONFIGS["game-console"],
     APP_CONFIGS.facebook,
     APP_CONFIGS.telegram,
     APP_CONFIGS.github,
-    APP_CONFIGS.movie,
   ])
 
   const handleDockItemClick = (appId: string) => {
-    
     windowManager.openWindow(appId)
-  }
-
-  const handleAddDockItem = () => {
-    alert("Tính năng thêm ứng dụng vào Dock sẽ được phát triển sau!")
   }
 
   const handleOpenSettings = () => {
@@ -53,14 +50,11 @@ export default function Desktop({ }: DesktopProps) {
   
   return (
     <div className="h-screen w-full bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 relative overflow-hidden">
-      {/* Desktop Wallpaper */}
-      <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-20" />
-
       {/* Status Bar */}
       <StatusBar onOpenSettings={handleOpenSettings} />
 
       {/* Desktop Icons */}
-      <div className="absolute top-10 left-4 space-y-6">
+      <div className="absolute top-10 left-4 space-y-6 flex flex-wrap flex-col max-h-[calc(100vh-80px)] overflow-auto">
         {desktopApps.map((app: any) => (
           <div
             key={app.id}
@@ -97,7 +91,7 @@ export default function Desktop({ }: DesktopProps) {
       )}
 
       {/* Dock */}
-      <Dock items={dockItems} onItemClick={handleDockItemClick} onAddItem={handleAddDockItem} />
+      <Dock items={dockItems} onItemClick={handleDockItemClick} />
     </div>
   )
 }

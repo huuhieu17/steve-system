@@ -164,7 +164,7 @@ export default function Window({
       className={cn(
         "absolute bg-white/95 backdrop-blur-md border border-gray-200/50 rounded-lg shadow-2xl overflow-hidden flex flex-col",
         isFocused ? "z-20" : "z-10",
-        isMaximized ? "top-6 left-0 right-0 bottom-0 w-full h-[calc(100%-6px)]" : "",
+        isMaximized ? `top-6 left-0 right-0 bottom-0 w-full h-[calc(100%-6px)]` : "",
       )}
       style={
         isMaximized

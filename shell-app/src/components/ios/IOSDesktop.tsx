@@ -1,16 +1,20 @@
 "use client"
 
 import { useWindowManager } from "@/hooks/useWindowManager"
+import { AppId } from "@/types/window"
 import DynamicWebApp from "../apps/DynamicWebApp"
 import IOSHomeScreen from "./IOSHomeScreen"
 import IOSCalculatorApp from "./apps/IOSCalculatorApp"
+import IOSComputerControlApp from "./apps/IOSComputerControlApp"
 import IOSFinderApp from "./apps/IOSFinderApp"
 import IOSMailApp from "./apps/IOSMailApp"
+import IOSMovieApp from "./apps/IOSMovieApp"
 import IOSNotesApp from "./apps/IOSNotesApp"
 import IOSSafariApp from "./apps/IOSSafariApp"
 import IOSSettingsApp from "./apps/IOSSettingsApp"
-import IOSComputerControlApp from "./apps/IOSComputerControlApp"
-import IOSMovieApp from "./apps/IOSMovieApp"
+import GameApp from "../apps/GameApp"
+import { GAME_LIST } from "@/constants/list-game"
+import GameConsole from "../apps/GameConsole"
 
 export default function IOSDesktop() {
   const { currentIOSApp, setCurrentIOSApp } = useWindowManager();
@@ -46,6 +50,10 @@ export default function IOSDesktop() {
           color: "bg-blue-500",
           allowFullscreen: true,
         }} onClose={closeApp} />
+      case "game2048":
+        return <GameApp gameConfig={GAME_LIST["2048"]} appId={AppId.GAME2048} />
+      case "game-console":
+        return <GameConsole appId={AppId.GAME_CONSOLE} />
       case "movies":
         // return <IOSPhotosApp onClose={closeApp} />
         return <DynamicWebApp app={{

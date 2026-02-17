@@ -2,17 +2,13 @@
 
 import {
   BookOpen,
-  Calculator,
-  Compass,
   Computer,
   Facebook,
-  Files,
   Film,
+  Gamepad2,
   Github,
-  StickyNoteIcon as Notes,
   ImagesIcon as Photos,
-  Send,
-  Settings
+  Send
 } from "lucide-react"
 import { useState } from "react"
 import IOSDock from "./IOSDock"
@@ -38,20 +34,9 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       { id: "facebook", name: "Facebook", icon: Facebook, color: "bg-blue-500" },
       { id: "github", name: "Github", icon: Github, color: "bg-gray-800" },
       { id: "telegram", name: "Telegram", icon: Send, color: "bg-blue-400" },
-      // { id: "music", name: "Music", icon: Music, color: "bg-red-500" },
-      // { id: "camera", name: "Camera", icon: Camera, color: "bg-gray-600" },
+      { id: "g2048", name: "2048 Game", icon: Gamepad2, color: "bg-gradient-to-br from-green-400 to-blue-600" },
+      { id: "game-console", name: "Game Console", icon: Gamepad2, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
 
-      // { id: "clock", name: "Clock", icon: Clock, color: "bg-black" },
-      // { id: "weather", name: "Weather", icon: Weather, color: "bg-blue-600" },
-      // { id: "maps", name: "Maps", icon: Maps, color: "bg-green-600" },
-      // { id: "calendar", name: "Calendar", icon: Calendar, color: "bg-red-600" },
-      { id: "safari", name: "Safari", icon: Compass, color: "bg-blue-500" },
-      { id: "notes", name: "Notes", icon: Notes, color: "bg-yellow-400" },
-      // { id: "contacts", name: "Contacts", icon: Contacts, color: "bg-gray-500" },
-      { id: "calculator", name: "Calculator", icon: Calculator, color: "bg-gray-800" },
-      { id: "settings", name: "Settings", icon: Settings, color: "bg-gray-600" },
-      { id: "files", name: "Files", icon: Files, color: "bg-blue-500" },
- 
     ],
   ]
 

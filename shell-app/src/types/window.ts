@@ -68,6 +68,9 @@ export enum AppId {
   COMIC = "comic",
   COMPUTER_CONTROL = "computer_control",
   MOVIE = "movie",
+  GAME2048 = "GAME2048",
+  GAMEMario = "GAMEMario",
+  GAME_CONSOLE = "game-console",
 }
 
 export interface WindowManagerState {

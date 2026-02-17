@@ -61,7 +61,6 @@ export class WindowManager {
     if (!appConfig) {
       throw new Error(`App config not found for ${appId}`)
     }
-
     // Check if window already exists and is minimized
     const existingWindow = this.state.windows.find((w) => w.appId === appId && w.isMinimized)
     if (existingWindow) {

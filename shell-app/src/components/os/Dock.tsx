@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -32,21 +32,16 @@ export default function Dock({ items, onItemClick, onAddItem }: DockProps) {
             <TooltipProvider key={app.id}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className={`relative ${
+                  {React.cloneElement(app.icon as any, {
+                    className: `relative ${
                       hoveredItem === app.id ? "scale-125" : ""
-                    } ${app.color} hover:scale-110 transition-all duration-200 shadow-lg rounded-xl w-12 h-12`}
-                    onMouseEnter={() => setHoveredItem(app.id)}
-                    onMouseLeave={() => setHoveredItem(null)}
-                    onClick={() => onItemClick(app.id)}
-                  >
-                    {app.icon}
-                    {app.isOpen && (
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full" />
-                    )}
-                  </Button>
+                    } ${app.color} hover:scale-110 transition-all duration-200 shadow-lg rounded-xl w-10 h-10 p-2 text-white`,
+                  
+                    onClick: () => onItemClick(app.id),
+                    onMouseEnter: () => setHoveredItem(app.id),
+                    onMouseLeave: () => setHoveredItem(null),
+                    
+                  })}
                 </TooltipTrigger>
                 <TooltipContent side="top">
                   <p>{app.name}</p>
@@ -62,7 +57,7 @@ export default function Dock({ items, onItemClick, onAddItem }: DockProps) {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="bg-gray-500/50 hover:scale-110 transition-all duration-200 shadow-lg rounded-xl w-12 h-12"
+                    className="bg-gray-500/50 hover:scale-110 transition-all duration-200 shadow-lg rounded-xl w-10 h-10"
                     onClick={onAddItem}
                   >
                     <PlusCircle className="w-6 h-6 text-white" />

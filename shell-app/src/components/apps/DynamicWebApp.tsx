@@ -11,7 +11,6 @@ interface DynamicWebAppProps {
 }
 
 export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
-
   const [isLoading, setIsLoading] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -116,16 +115,20 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
   }
 
   return (
-    <div className={`h-full flex flex-col ${isFullscreen ? "fixed inset-0 z-50 bg-white" : ""}`}>
+    <div className={`h-full flex flex-col ${isFullscreen ? "absolute top-0 left-0 right-0 bottom-0 bg-white" : ""}`}>
       {/* Toolbar */}
-      <div className="h-10 bg-gray-100 border-b flex items-center justify-between px-4">
-        <div className="flex items-center space-x-2">
-          <div className={`w-4 h-4 ${app.color} rounded`}></div>
-          <span className="text-sm font-medium">{app.name}</span>
-          {/* {app.url && <span className="text-xs text-gray-500 truncate max-w-xs">{app.url}</span>} */}
-        </div>
+      <div className="h-8 bg-gray-100 border-b flex items-center justify-between px-4">
+        {!isFullscreen ? (
+          <div className="flex items-right space-x-2">
+            <div className={`w-4 h-4 ${app.color} rounded`}></div>
+            <span className="text-sm font-medium">{app.name}</span>
 
-        <div className="flex items-center space-x-1">
+          </div>
+        ) : (
+          <div className="blank" />
+        )
+        }
+        <div className="flex items-center space-x-1 z-[1001]">
           <Button variant="ghost" size="sm" onClick={handleRefresh} disabled={isLoading}>
             <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
           </Button>

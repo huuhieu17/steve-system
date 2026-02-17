@@ -2,6 +2,7 @@ import CalculatorApp from "@/components/apps/CalculatorApp"
 import ComputerControlApp from "@/components/apps/ComputerControlApp"
 import DynamicWebApp from "@/components/apps/DynamicWebApp"
 import FinderApp from "@/components/apps/FinderApp"
+import GameApp from "@/components/apps/GameApp"
 import MovieApp from "@/components/apps/MovieApp"
 import NotesApp from "@/components/apps/NotesApp"
 import PhotoApp from "@/components/apps/PhotoApp"
@@ -19,6 +20,7 @@ import {
     FileText,
     Film,
     Folder,
+    Gamepad2,
     Github,
     HardDrive,
     Mail,
@@ -29,6 +31,8 @@ import {
     Terminal,
     User
 } from "lucide-react"
+import { GAME_LIST } from "./list-game"
+import GameConsole from "@/components/apps/GameConsole"
 
 export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.FINDER]: {
@@ -90,9 +94,9 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         id: AppId.SAFARI,
         name: "Safari",
         icon: <Compass className="w-6 h-6 text-white" />,
-        color: "bg-gradient-to-br from-blue-400 to-blue-600",
+        color: "bg-gradient-to-tl from-blue-400 to-blue-600",
         category: AppCategory.PRODUCTIVITY,
-        defaultSize: { width: 900, height: 600 },
+        defaultSize: { width: 900, height: 500 },
         minSize: { width: 500, height: 300 },
         defaultPosition: { x: 50, y: 50 },
         component: () => <SafariAppOptimized/>,
@@ -133,19 +137,19 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.PHOTOS]: {
         id: AppId.PHOTOS,
         name: "Thư viện ảnh",
-        icon: <Camera className="bg-gradient-to-br from-red-400 to-pink-500 w-10 h-10 text-white p-2 rounded" />,
-        color: "bg-gradient-to-br from-yellow-400 to-orange-500",
+        icon: <Camera className="bg-gradient-to-tl from-red-400 to-pink-500 w-10 h-10 text-white p-2 rounded" />,
+        color: "bg-gradient-to-tl from-yellow-400 to-orange-500",
         category: AppCategory.MEDIA,
-        defaultSize: { width: 800, height: 600 },
+        defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
-        defaultPosition: { x: 80, y: 60 },
+        defaultPosition: { x: 100, y: 50 },
         component: PhotoApp,
     },
     [AppId.MOVIES]: {
         id: AppId.MOVIES,
         name: "Xem Phim",
-        icon: <Film className="w-10 h-10 bg-gradient-to-br from-black-400 to-green-500 text-white p-2 rounded" />,
-        color: "bg-blue-500",
+        icon: <Film className="w-10 h-10 bg-gradient-to-tl from-black-400 to-green-500 text-white p-2 rounded" />,
+        color: "bg-gradient-to-tl from-black-400 to-green-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
@@ -162,8 +166,8 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     },
     [AppId.COMIC]: {
         id: AppId.COMIC,
-        name: "Dọc Truyện",
-        icon: <BookOpen className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-red-500 text-white p-2 rounded" />,
+        name: "Đọc Truyện",
+        icon: <BookOpen className="hover:scale-110 transition-all duration-200 shadow-lg w-10 h-10 bg-gradient-to-tl from-yellow-400 to-red-500 text-white p-2 rounded" />,
         color: "bg-blue-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
@@ -272,8 +276,8 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.COMPUTER_CONTROL]: {
         id: AppId.COMPUTER_CONTROL,
         name: "Điều khiển máy tính",
-        icon: <Computer className="w-10 h-10 p-2 rounded text-white bg-gradient-to-br from-purple-400 to-pink-600" />,
-        color: "bg-pink-600",
+        icon: <Computer className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-purple-400 to-pink-600" />,
+        color: "bg-gradient-to-tl from-purple-400 to-pink-600",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 600, height: 400 },
         minSize: { width: 300, height: 200 },
@@ -283,22 +287,58 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.MOVIE]: {
         id: AppId.MOVIE,
         name: "Movie",
-        icon: <Film className="w-10 h-10 p-2 rounded text-white bg-gradient-to-br from-red-400 to-orange-600" />,
-        color: "bg-orange-600",
+        icon: <Film className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-red-400 to-orange-600" />,
+        color: "bg-gradient-to-tl from-red-400 to-orange-600",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
         defaultPosition: { x: 150, y: 150 },
         component: () => <MovieApp />,
     },
+    [AppId.GAME2048]: {
+        id: AppId.GAME2048,
+        name: "2048",
+        icon: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/2048_logo.svg/500px-2048_logo.svg.png" className="w-10 h-10 rounded text-white" />,
+        color: "bg-gradient-to-tl from-green-400 to-blue-600",
+        category: AppCategory.GAMES,
+        defaultSize: { width: 800, height: 500 },
+        minSize: { width: 400, height: 300 },
+        defaultPosition: { x: 150, y: 150 },
+        component: () => <GameApp gameConfig={GAME_LIST["2048"]} appId={AppId.GAME2048} />,
+    },
+     [AppId.GAMEMario]: {
+        id: AppId.GAMEMario,
+        name: "Mario",
+        icon: <img src="https://i.pinimg.com/736x/2a/35/8d/2a358da09076583f525222993732efc1.jpg" className="w-10 h-10 rounded text-white" />,
+        color: "bg-gradient-to-tl from-green-400 to-blue-600",
+        category: AppCategory.GAMES,
+        defaultSize: { width: 800, height: 500 },
+        minSize: { width: 400, height: 300 },
+        defaultPosition: { x: 150, y: 150 },
+        component: () => <GameApp gameConfig={GAME_LIST.Mario} appId={AppId.GAMEMario} />,
+    },
+    [AppId.GAME_CONSOLE]: {
+        id: AppId.GAME_CONSOLE,
+        name: "Game Console",
+        icon: <Gamepad2 className="w-6 h-6 text-white" />,
+        color: "bg-purple-600",
+        category: AppCategory.MEDIA,
+        defaultSize: { width: 900, height: 600 },
+        minSize: { width: 500, height: 400 },
+        defaultPosition: { x: 100, y: 50 },
+        component: () => <GameConsole appId={AppId.GAME_CONSOLE} />,
+    },
+    
+
     
 }
 
 export const DOCK_APPS: AppId[] = [
+    AppId.MOVIES,
+    AppId.PHOTOS,
     AppId.COMPUTER_CONTROL,
     AppId.FINDER,
     AppId.SAFARI,
-    AppId.NOTES,
     AppId.CALCULATOR,
     AppId.TERMINAL, 
     AppId.SETTINGS,

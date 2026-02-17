@@ -65,7 +65,6 @@ export default function StatusBar({ onOpenSettings }: StatusBarProps) {
       <div className="flex items-center space-x-4 relative" ref={startRef}>
         <div className="font-bold">
           <div onClick={() => setIsMenuOpen(!isMenuOpen)} className="cursor-pointer hover:bg-white/10 rounded px-1 flex items-center gap-2">
-            <span className="text-xl"></span>
             {user ? user.username : ''}
           </div>
           {isMenuOpen && (
