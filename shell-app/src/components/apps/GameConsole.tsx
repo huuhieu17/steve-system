@@ -35,7 +35,7 @@ export default function GameConsole({ appId }: GameConsoleProps) {
     return (
       <div className="w-full h-full flex flex-col bg-gray-900">
         {/* Header with exit button */}
-        <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-4 flex items-center justify-between shadow-lg">
+        <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-2 flex items-center justify-between shadow-lg">
           <div className="flex items-center gap-2">
             <Gamepad2 className="w-6 h-6 text-white" />
             <h2 className="text-white text-lg font-bold">{selectedGame}</h2>
@@ -50,7 +50,7 @@ export default function GameConsole({ appId }: GameConsoleProps) {
             className="bg-red-600 hover:bg-red-700 text-white border-0"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Games
+            Quay lại danh sách game
           </Button>
         </div>
 
@@ -76,7 +76,7 @@ export default function GameConsole({ appId }: GameConsoleProps) {
         <div className="relative">
           <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
           <Input
-            placeholder="Search games..."
+            placeholder="Tìm kiếm trò chơi..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10 bg-white/20 border-white/30 text-white placeholder:text-gray-300"
@@ -89,7 +89,7 @@ export default function GameConsole({ appId }: GameConsoleProps) {
         <div className="p-6">
           {filteredGames.length === 0 ? (
             <div className="flex items-center justify-center h-64">
-              <p className="text-gray-400 text-lg">No games found</p>
+              <p className="text-gray-400 text-lg">Không tìm thấy trò chơi nào</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -100,11 +100,11 @@ export default function GameConsole({ appId }: GameConsoleProps) {
                   className="h-auto flex flex-col items-center justify-center p-4 bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-lg transition-all duration-200 hover:scale-105 group"
                 >
                   <Gamepad2 className="w-8 h-8 mb-2 group-hover:scale-110 transition-transform" />
-                  <span className="text-center text-sm font-semibold line-clamp-2">
+                  <span className="text-center text-sm font-semibold line-clamp-2 whitespace-normal">
                     {gameName}
                   </span>
                   <span className="text-xs text-white/70 mt-1">
-                    Play
+                    Click để chơi
                   </span>
                 </Button>
               ))}

@@ -320,7 +320,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.GAME_CONSOLE]: {
         id: AppId.GAME_CONSOLE,
         name: "Game Console",
-        icon: <Gamepad2 className="w-6 h-6 text-white" />,
+        icon: <Gamepad2 className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-red-400 to-yellow-600" />,
         color: "bg-purple-600",
         category: AppCategory.MEDIA,
         defaultSize: { width: 900, height: 600 },
