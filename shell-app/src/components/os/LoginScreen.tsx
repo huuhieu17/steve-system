@@ -298,7 +298,7 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
             <div className="space-y-3">
               {isSubmitting || isLogging ?
                 (
-                  <div className="text-gray-400 text-sm text-center flex items-center justify-center gap-2              "><Spinner size="3" /> Đang đăng nhập... </div>
+                  <div className="text-gray-400 text-sm text-center flex items-center justify-center gap-2"><Spinner size="3" /> Đang đăng nhập... </div>
                 ) :
                 (
                   <Button

@@ -2,47 +2,69 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Camera, Fingerprint, Flashlight, User } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useSystem } from "@/contexts/user-context"
+import { consoleService } from "@/services/console.service"
+import { Spinner } from "@radix-ui/themes/components/index"
+import { Fingerprint, User } from "lucide-react"
+import { useState } from "react"
 
 interface IOSLockScreenProps {
   onUnlock: () => void
 }
 
 export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
-  const [time, setTime] = useState(new Date())
+  const { user, fetchUserData } = useSystem();
+  const [time] = useState(new Date())
   const [showOtherAccountLogin, setShowOtherAccountLogin] = useState(false)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [isUnlocking, setIsUnlocking] = useState(false)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date())
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
+  const handleError = (message: string) => {
+    setError(message);
+    setIsUnlocking(false);
+    return;
+  }
 
   const handleGuestUnlock = () => {
     onUnlock()
   }
 
-  const handleOtherAccountLogin = () => {
-    if (!username.trim() || !password.trim()) {
-      setError("Vui lòng nhập đầy đủ thông tin")
-      return
+  const handleOtherAccountLogin = async () => {
+    setError("")
+    setIsUnlocking(true);
+    await new Promise((r) => setTimeout(r, 1000));
+    if (!username.trim()) {
+      handleError("Vui lòng nhập tên người dùng")
+      return;
     }
 
-    // Simple validation - in real app, check against backend
-    if (username.toLowerCase() === "marcos" && password === "password") {
-      onUnlock()
-    } else {
-      setError("Tên đăng nhập hoặc mật khẩu không đúng")
+    if (!password.trim()) {
+      handleError("Vui lòng nhập mật khẩu")
+      return;
     }
+    try {
+      const loginData = await consoleService.login(username, password);
+      const { data } = loginData;
+
+      const { code, message, data: loginResult } = data;
+      const { authenticated } = loginResult || {};
+      if (!data || code !== 200 || !authenticated) {
+        handleError(message || "Tên người dùng hoặc mật khẩu không đúng");
+      }
+      setIsUnlocking(false);
+      fetchUserData();
+      onUnlock();
+    } catch (err) {
+      handleError("Tên người dùng hoặc mật khẩu không đúng");
+      return;
+    }
+
   }
 
   return (
-    <div className="min-h-screen h-screen w-full bg-gradient-to-b from-blue-900 via-purple-900 to-pink-900 relative overflow-hidden bg-gray-800">
+    <div className="max-h-screen h-screen w-full bg-gradient-to-b from-blue-900 via-purple-900 to-pink-900 relative overflow-hidden bg-gray-800">
       {/* Status Bar */}
       <div className="absolute top-2 left-4 right-4 flex justify-between items-center text-white text-sm font-medium z-20">
         <div>{time.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })}</div>
@@ -53,7 +75,7 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
             <div className="w-1 h-1 bg-white rounded-full" />
             <div className="w-1 h-1 bg-white rounded-full" />
           </div>
-          
+
         </div>
       </div>
 
@@ -73,26 +95,21 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
           <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mb-2">
             <User className="w-10 h-10 text-white" />
           </div>
-          <span className="text-white text-sm font-medium">Guest</span>
+          <span className="text-white text-sm font-medium">{user?.username || "Guest"}</span>
         </div>
       )}
-
-      {/* Quick Actions */}
-      <div className="absolute bottom-32 left-6 right-6 flex justify-between">
-        <button className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
-          <Flashlight className="w-6 h-6 text-white" />
-        </button>
-        <button className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
-          <Camera className="w-6 h-6 text-white" />
-        </button>
-      </div>
 
       {/* Login Options */}
       <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center space-y-4">
         {showOtherAccountLogin ? (
           <div className="w-80 px-6 space-y-4">
             <div className="text-center mb-4">
-              <h3 className="text-white text-lg font-medium">Đăng nhập tài khoản</h3>
+              {isUnlocking ? (
+                <div className="text-gray-400 text-sm text-center flex items-center justify-center gap-2"><Spinner size="3" /> Đang đăng nhập... </div>
+              ) : (
+                <h3 className="text-white text-lg font-medium">Đăng nhập tài khoản</h3>
+              )}
+
             </div>
 
             <div className="space-y-3">
