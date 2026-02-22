@@ -1,76 +1,142 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { User, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-
+import { consoleService } from "@/services/console.service"
+import { useSystem } from "@/contexts/user-context"
+import { Spinner } from "@radix-ui/themes"
 interface LoginScreenProps {
-  onLogin: (username: string) => void
-  users: { id: string; name: string; avatar: string; password?: string }[]
+  onLogin: () => void
 }
 
-export default function LoginScreen({ onLogin, users }: LoginScreenProps) {
+export default function LoginScreen({ onLogin }: LoginScreenProps) {
+  const { user, fetchUserData } = useSystem();
   const [showOtherAccountLogin, setShowOtherAccountLogin] = useState(false)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [showCreateAccount, setShowCreateAccount] = useState(false)
-  const [newAccountData, setNewAccountData] = useState({ username: "", password: "", confirmPassword: "" })
-
+  const [newAccountData, setNewAccountData] = useState({ username: "", password: "", confirmPassword: "", email: "" })
+  const [isLogging, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // Guest account login (no password required)
-  const handleGuestLogin = () => {
-    onLogin("Guest")
+  const handleLogin = async () => {
+    setIsSubmitting(true);
+    await new Promise((r) => setTimeout(r, 1000));
+    onLogin()
+  }
+
+  const handleError = (message: string) => {
+    setError(message);
+    setIsSubmitting(false);
+    return;
   }
 
   // Other account login (requires username/password)
-  const handleOtherAccountLogin = () => {
+  const handleOtherAccountLogin = async () => {
+    setError("")
+    setIsSubmitting(true);
+    await new Promise((r) => setTimeout(r, 1000));
     if (!username.trim()) {
-      setError("Vui lòng nhập tên người dùng")
-      return
+      handleError("Vui lòng nhập tên người dùng")
+      return;
     }
 
     if (!password.trim()) {
-      setError("Vui lòng nhập mật khẩu")
-      return
+      handleError("Vui lòng nhập mật khẩu")
+      return;
+    }
+    try {
+      const loginData = await consoleService.login(username, password);
+      const { data } = loginData;
+
+      const { code, message, data: loginResult } = data;
+      const { authenticated } = loginResult || {};
+      if (!data || code !== 200 || !authenticated) {
+        handleError(message || "Tên người dùng hoặc mật khẩu không đúng");
+      }
+      setIsSubmitting(false);
+      fetchUserData();
+      onLogin();
+    } catch (err) {
+      handleError("Tên người dùng hoặc mật khẩu không đúng");
+      return;
     }
 
-    // Check if user exists
-    const existingUser = users.find((u) => u.name.toLowerCase() === username.toLowerCase())
-    if (existingUser && existingUser.name !== "Guest") {
-      if (password === "password" || password === existingUser.password) {
-        onLogin(existingUser.name)
-      } else {
-        setError("Sai mật khẩu")
-      }
-    } else {
-      setError("Tài khoản không tồn tại")
-    }
   }
 
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
+    setIsSubmitting(true);
+    await new Promise((r) => setTimeout(r, 1000));
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>_\-\\[\]\\/~`+=;']).{8,}$/;
+
     if (!newAccountData.username.trim()) {
-      setError("Vui lòng nhập tên người dùng")
-      return
+      handleError("Vui lòng nhập tên người dùng");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!newAccountData.email.trim()) {
+      handleError("Vui lòng nhập email");
+      setIsSubmitting(false);
+      return;
     }
 
     if (!newAccountData.password.trim()) {
-      setError("Vui lòng nhập mật khẩu")
-      return
+      handleError("Vui lòng nhập mật khẩu");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // ✅ validate password mạnh
+    if (!passwordRegex.test(newAccountData.password)) {
+      handleError(
+        "Mật khẩu phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt"
+      );
+      setIsSubmitting(false);
+      return;
     }
 
     if (newAccountData.password !== newAccountData.confirmPassword) {
-      setError("Mật khẩu xác nhận không khớp")
-      return
+      handleError("Mật khẩu xác nhận không khớp");
+      setIsSubmitting(false);
+      return;
     }
 
-    if (users.find((u) => u.name.toLowerCase() === newAccountData.username.toLowerCase())) {
-      setError("Tên người dùng đã tồn tại")
-      return
-    }
+    try {
+      const registerData = await consoleService.register(
+        newAccountData.username,
+        newAccountData.password,
+        newAccountData.email
+      );
 
-    // Create new user and login
-    onLogin(newAccountData.username)
+      const { data } = registerData;
+      const { code, message } = data;
+
+      if (!data || code !== 200) {
+        handleError(message || "Đăng ký thất bại");
+        setIsSubmitting(false);
+        return;
+      }
+
+      loginAfterCreateAccount();
+    } catch (err) {
+      handleError("Đăng ký thất bại");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const loginAfterCreateAccount = () => {
+    setUsername(newAccountData.username);
+    setPassword(newAccountData.password);
+    setShowCreateAccount(false);
+    setShowOtherAccountLogin(true);
+    setError("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
   }
 
   return (
@@ -88,13 +154,26 @@ export default function LoginScreen({ onLogin, users }: LoginScreenProps) {
         {showCreateAccount ? (
           // Create Account Form
           <div className="w-full space-y-4">
-            <h2 className="text-white text-xl font-semibold text-center mb-6">Tạo tài khoản mới</h2>
+            {isSubmitting ?
+              (
+                <div className="text-gray-400 text-sm text-center flex items-center justify-center gap-2"><Spinner size="3" /> Đang tạo tài khoản... </div>
+              ) : (
+                <h2 className="text-white text-xl font-semibold text-center mb-6">Tạo tài khoản mới</h2>
+              )}
 
             <Input
               type="text"
               value={newAccountData.username}
               onChange={(e) => setNewAccountData({ ...newAccountData, username: e.target.value })}
               placeholder="Tên người dùng"
+              className="bg-white/10 border-white/10 text-white placeholder:text-gray-400"
+            />
+
+            <Input
+              type="email"
+              value={newAccountData.email}
+              onChange={(e) => setNewAccountData({ ...newAccountData, email: e.target.value })}
+              placeholder="Email"
               className="bg-white/10 border-white/10 text-white placeholder:text-gray-400"
             />
 
@@ -135,31 +214,41 @@ export default function LoginScreen({ onLogin, users }: LoginScreenProps) {
         ) : showOtherAccountLogin ? (
           // Other Account Login Form
           <div className="w-full space-y-4">
-            <h2 className="text-white text-xl font-semibold text-center mb-6">Đăng nhập tài khoản</h2>
+            {isSubmitting || isLogging ?
+              (
+                <div className="text-gray-400 text-sm text-center flex items-center justify-center gap-2"><Spinner size="3" /> Đang đăng nhập với {username}... </div>
+              ) : (
+                <h2 className="text-white text-xl font-semibold text-center mb-6">Đăng nhập tài khoản</h2>
+              )}
 
-            <Input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Tên người dùng"
-              className="bg-white/10 border-white/10 text-white placeholder:text-gray-400"
-            />
-
-            <div className="relative">
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value)
-                  setError("")
-                }}
-                placeholder="Mật khẩu"
-                className="pl-10 bg-white/10 border-white/10 text-white placeholder:text-gray-400"
-                onKeyDown={(e) => e.key === "Enter" && handleOtherAccountLogin()}
-              />
-              <Lock className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-            </div>
-
+            {!isSubmitting && !isLogging && (
+              <>
+                <div className="relative">
+                  <Input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Tên người dùng"
+                    className="pl-10 bg-white/10 border-white/10 text-white placeholder:text-gray-400"
+                  />
+                  <User className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                </div>
+                <div className="relative">
+                  <Input
+                    type="password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value)
+                      setError("")
+                    }}
+                    placeholder="Mật khẩu"
+                    className="pl-10 bg-white/10 border-white/10 text-white placeholder:text-gray-400"
+                    onKeyDown={(e) => e.key === "Enter" && handleOtherAccountLogin()}
+                  />
+                  <Lock className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                </div>
+              </>
+            )}
             {error && <div className="text-red-400 text-sm text-center">{error}</div>}
 
             <div className="space-y-2">
@@ -202,17 +291,27 @@ export default function LoginScreen({ onLogin, users }: LoginScreenProps) {
               <div className="w-24 h-24 rounded-full bg-gray-600 flex items-center justify-center mb-4 overflow-hidden">
                 <User className="w-12 h-12 text-gray-300" />
               </div>
-              <h2 className="text-white text-xl font-semibold mb-2">Guest</h2>
-              <p className="text-gray-400 text-sm text-center">Tài khoản khách - Không cần mật khẩu</p>
+              <h2 className="text-white text-xl font-semibold mb-2">{user?.username || "Guest"}</h2>
+              <p className="text-gray-400 text-sm text-center">{user ? `Xin chào ${user.lastName ?? ""} ${user.firstName ?? ""} đã quay trở lại` : "Tài khoản khách - Không cần mật khẩu"}</p>
             </div>
 
             <div className="space-y-3">
-              <Button
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg py-3"
-                onClick={handleGuestLogin}
-              >
-                Tiếp tục với Guest
-              </Button>
+              {isSubmitting || isLogging ?
+                (
+                  <div className="text-gray-400 text-sm text-center flex items-center justify-center gap-2              "><Spinner size="3" /> Đang đăng nhập... </div>
+                ) :
+                (
+                  <Button
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg py-3"
+                    onClick={() => {
+                      startTransition(() => {
+                        handleLogin();
+                      });
+                    }}
+                  >
+                    Tiếp tục với {user?.username || "Guest"}
+                  </Button>
+                )}
 
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -232,40 +331,6 @@ export default function LoginScreen({ onLogin, users }: LoginScreenProps) {
               </Button>
             </div>
 
-            {/* Quick Access to Existing Users (if any) */}
-            {users.filter((u) => u.name !== "Guest").length > 0 && (
-              <div className="mt-6">
-                <p className="text-gray-400 text-sm text-center mb-3">Tài khoản gần đây:</p>
-                <div className="flex justify-center space-x-3">
-                  {users
-                    .filter((u) => u.name !== "Guest")
-                    .slice(0, 3)
-                    .map((user) => (
-                      <button
-                        key={user.id}
-                        className="flex flex-col items-center p-2 rounded-lg hover:bg-white/5 transition-colors"
-                        onClick={() => {
-                          setUsername(user.name)
-                          setShowOtherAccountLogin(true)
-                        }}
-                      >
-                        <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center mb-1">
-                          {user.avatar ? (
-                            <img
-                              src={user.avatar || "/placeholder.svg"}
-                              alt={user.name}
-                              className="w-full h-full object-cover rounded-full"
-                            />
-                          ) : (
-                            <User className="w-5 h-5 text-gray-400" />
-                          )}
-                        </div>
-                        <span className="text-xs text-gray-300">{user.name}</span>
-                      </button>
-                    ))}
-                </div>
-              </div>
-            )}
           </div>
         )}
       </div>

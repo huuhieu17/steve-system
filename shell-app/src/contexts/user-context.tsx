@@ -1,10 +1,9 @@
 
 
+import { consoleService } from '@/services/console.service';
 import type { BootState } from '@/types/System';
 import type { User } from '@/types/User';
-import React, { createContext, useState, useContext } from 'react';
-
-
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 export interface SystemContextType {
     bootState: BootState;
@@ -12,6 +11,7 @@ export interface SystemContextType {
     user: User | null;
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
     handleLogout: () => void;
+    fetchUserData: () => void;
 }
 
 // Default context
@@ -37,11 +37,26 @@ export const SystemProvider: React.FC<Props> = ({ children }) => {
     const [bootState, setBootState] = useState<BootState>("splash");
 
     const handleLogout = () => {
-        setBootState("login")
+        consoleService.logout();
+        setBootState("login") 
         setUser(null)
     }
+
+    const fetchUserData = async () => {
+        try {
+            const response = await consoleService.getUserInfo();
+            const { data } = response;
+            setUser(data?.data);
+        } catch (error) {
+            console.error("Failed to fetch user data:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
     return (
-        <SystemContext.Provider value={{ user, setUser, bootState, setBootState, handleLogout }}>
+        <SystemContext.Provider value={{ user, setUser, bootState, setBootState, handleLogout, fetchUserData }}>
             {children}
         </SystemContext.Provider>
     );

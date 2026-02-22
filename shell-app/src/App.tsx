@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import ResponsiveOS from './components/ResponsiveOS'
 import './main.css'
-
+import "@radix-ui/themes/styles.css";
 export default function App() {
   document.title = 'Steve System'
   return (
