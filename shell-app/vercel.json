@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/console/api/:path*",
+      "destination": "https://console.imsteve.dev/api/:path*"
+    }
+  ]
+}
