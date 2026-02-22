@@ -2,18 +2,20 @@ import federation from '@originjs/vite-plugin-federation';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd())
+import { defineConfig } from 'vite';
+export default defineConfig(({}) => {
 
-  const API_URL = `${env.VITE_CONSOLE_API_URL ?? 'http://localhost:4173'}`
+  const API_URL = `${process.env.VITE_CONSOLE_API_URL ?? 'http://localhost:4173'}`
   return {
     server: {
       proxy: {
         '/console/api': {
           target: API_URL,
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/console/, ''),
+          rewrite: (path) => {
+            console.log('Proxying request to:', API_URL + path);
+            return path.replace(/^\/console/, '')
+          },
         },
       },
     },
