@@ -80,7 +80,7 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
       </div>
 
       {/* Time Display */}
-      <div className="absolute top-1/4 left-0 right-0 text-center text-white">
+      <div className="absolute top-1/5 left-0 right-0 text-center text-white">
         <div className="text-6xl font-light mb-2">
           {time.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })}
         </div>
@@ -91,7 +91,7 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
 
       {/* Guest Avatar */}
       {!showOtherAccountLogin && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+        <div className="absolute top-[45%] left-1/2 transform -translate-x-1/2 -translate-y-[45%] flex flex-col items-center">
           <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mb-2">
             <User className="w-10 h-10 text-white" />
           </div>
@@ -100,7 +100,7 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
       )}
 
       {/* Login Options */}
-      <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center space-y-4">
+      <div className="absolute top-[60%] left-0 right-0 flex flex-col items-center space-y-4">
         {showOtherAccountLogin ? (
           <div className="w-80 px-6 space-y-4">
             <div className="text-center mb-4">

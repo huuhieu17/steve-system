@@ -24,7 +24,7 @@ export default function IOSSplashScreen({ onComplete }: { onComplete: () => void
 
   return (
     <div className="h-screen w-full bg-black flex flex-col items-center justify-center">
-      <div className="w-20 text-white text-3xl mb-5" >STEVE</div>
+      <div className="w-full text-white text-3xl mb-5 text-center" >STEVE</div>
       <div className="w-48 h-0.5 bg-gray-800 rounded-full overflow-hidden">
         <div
           className="h-full bg-white rounded-full transition-all duration-300 ease-out"
