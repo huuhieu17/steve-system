@@ -45,7 +45,8 @@ export const SystemProvider: React.FC<Props> = ({ children }) => {
     const fetchUserData = async () => {
         try {
             const response = await consoleService.getUserInfo();
-            const { data } = response;
+            const { data } = response || {};
+            if (!data || !data.data) return;
             setUser(data?.data);
         } catch (error) {
             console.error("Failed to fetch user data:", error);

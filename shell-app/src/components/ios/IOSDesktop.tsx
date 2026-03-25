@@ -15,6 +15,7 @@ import IOSSettingsApp from "./apps/IOSSettingsApp"
 import GameApp from "../apps/GameApp"
 import { GAME_LIST } from "@/constants/list-game"
 import GameConsole from "../apps/GameConsole"
+import MediaStaticDownloadApp from "../apps/MediaStaticDownloadApp"
 
 export default function IOSDesktop() {
   const { currentIOSApp, setCurrentIOSApp } = useWindowManager();
@@ -109,6 +110,8 @@ export default function IOSDesktop() {
           color: "bg-blue-500",
           allowFullscreen: true,
         }} onClose={closeApp} />
+      case "media_static_download":
+        return <MediaStaticDownloadApp onClose={closeApp} />
       case "movie":
         return <IOSMovieApp onClose={closeApp} />
       default:

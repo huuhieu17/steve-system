@@ -5,7 +5,7 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { useSystem } from "@/contexts/user-context"
 import { Globe, LogOut, Monitor, User, Volume2, VolumeX, Wifi } from "lucide-react"
-import { useState } from "react"
+import { type ReactNode, useState } from "react"
 import DynamicAppManager, { type DynamicApp } from "./DynamicAppManager"
 
 // Thêm props cho dynamic apps
@@ -14,6 +14,42 @@ interface SettingsAppProps {
   onAddApp?: (app: DynamicApp) => void
   onUpdateApp?: (id: string, app: DynamicApp) => void
   onDeleteApp?: (id: string) => void
+}
+
+interface SettingsSectionProps {
+  title: string
+  description: string
+  children: ReactNode
+}
+
+function SettingsSection({ title, description, children }: SettingsSectionProps) {
+  return (
+    <div className="rounded-2xl border border-white/80 bg-white/85 backdrop-blur-xl shadow-sm p-5 space-y-5">
+      <div>
+        <h2 className="text-lg font-semibold text-zinc-800">{title}</h2>
+        <p className="text-sm text-zinc-500">{description}</p>
+      </div>
+      {children}
+    </div>
+  )
+}
+
+interface SettingsRowProps {
+  title: string
+  description?: string
+  children: ReactNode
+}
+
+function SettingsRow({ title, description, children }: SettingsRowProps) {
+  return (
+    <div className="flex items-center justify-between gap-4 rounded-xl border border-zinc-200/70 bg-white/80 px-4 py-3">
+      <div>
+        <div className="font-medium text-zinc-800">{title}</div>
+        {description && <div className="text-sm text-zinc-500">{description}</div>}
+      </div>
+      <div className="shrink-0">{children}</div>
+    </div>
+  )
 }
 
 export default function SettingsApp({
@@ -38,18 +74,27 @@ export default function SettingsApp({
     { id: "network", name: "Network", icon: <Wifi className="w-5 h-5" /> },
     // { id: "security", name: "Security", icon: <Shield className="w-5 h-5" /> },
     { id: "users", name: "Users", icon: <User className="w-5 h-5" /> },
+    { id: "apps", name: "Apps", icon: <Globe className="w-5 h-5" /> },
   ]
 
+  const activeCategoryName = settingsCategories.find((category) => category.id === activeTab)?.name || "Settings"
+
   return (
-    <div className="h-full flex">
-      {/* Sidebar */}
-      <div className="w-48 bg-gray-50/80 border-r border-gray-200/50 p-2">
+    <div className="h-full flex bg-gradient-to-b from-zinc-100 to-zinc-200/70">
+      <div className="w-56 border-r border-white/70 bg-white/65 backdrop-blur-xl p-3">
+        <div className="px-2 pb-3">
+          <div className="text-xs uppercase tracking-wide text-zinc-500">System Settings</div>
+        </div>
         <div className="space-y-1">
           {settingsCategories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveTab(category.id)}
-              className={`w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-blue-100 rounded-lg ${activeTab === category.id ? "bg-blue-200 font-medium" : ""}`}
+              className={`w-full flex items-center space-x-2 px-3 py-2 text-sm rounded-xl transition-all duration-150 ${
+                activeTab === category.id
+                  ? "bg-blue-500 text-white shadow-sm"
+                  : "text-zinc-700 hover:bg-zinc-200/80"
+              }`}
             >
               {category.icon}
               <span>{category.name}</span>
@@ -58,66 +103,51 @@ export default function SettingsApp({
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 p-6 overflow-auto">
-        {activeTab === "general" && (
-          <div aria-label="general" className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-medium">General Settings</h2>
+      <div className="flex-1 overflow-auto p-6 space-y-4">
+        <div className="rounded-2xl border border-white/80 bg-white/75 backdrop-blur-xl px-5 py-4 shadow-sm">
+          <h1 className="text-xl font-semibold text-zinc-800">{activeCategoryName}</h1>
+          <p className="text-sm text-zinc-500">Tinh chỉnh hệ thống.</p>
+        </div>
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium">Language</div>
-                  <div className="text-sm text-gray-500">System language setting</div>
-                </div>
-                <select className="px-3 py-1 border rounded-md">
+        {activeTab === "general" && (
+          <div aria-label="general" className="space-y-4">
+            <SettingsSection title="General Settings" description="Thiết lập hệ thống cơ bản.">
+              <SettingsRow title="Language" description="System language setting">
+                <select className="px-3 py-1.5 border border-zinc-300 bg-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                   <option>English</option>
                   <option>Vietnamese</option>
                   <option>French</option>
                 </select>
-              </div>
+              </SettingsRow>
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium">Time Zone</div>
-                  <div className="text-sm text-gray-500">Set your time zone</div>
-                </div>
-                <select className="px-3 py-1 border rounded-md">
+              <SettingsRow title="Time Zone" description="Set your time zone">
+                <select className="px-3 py-1.5 border border-zinc-300 bg-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                   <option>UTC+07:00 - Ho Chi Minh</option>
                   <option>UTC+00:00 - London</option>
                   <option>UTC-08:00 - Los Angeles</option>
                 </select>
-              </div>
+              </SettingsRow>
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium">Date Format</div>
-                  <div className="text-sm text-gray-500">Choose your preferred date format</div>
-                </div>
-                <select className="px-3 py-1 border rounded-md">
+              <SettingsRow title="Date Format" description="Choose your preferred date format">
+                <select className="px-3 py-1.5 border border-zinc-300 bg-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                   <option>DD/MM/YYYY</option>
                   <option>MM/DD/YYYY</option>
                   <option>YYYY-MM-DD</option>
                 </select>
-              </div>
-            </div>
+              </SettingsRow>
+            </SettingsSection>
           </div>
         )}
-        {activeTab === "appearance" && (
-          <div aria-label="appearance" className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-medium">Appearance Settings</h2>
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium">Dark Mode</div>
-                  <div className="text-sm text-gray-500">Enable dark mode for system UI</div>
-                </div>
+        {activeTab === "appearance" && (
+          <div aria-label="appearance" className="space-y-4">
+            <SettingsSection title="Appearance Settings" description="Điều chỉnh giao diện và kiểu hiển thị.">
+              <SettingsRow title="Dark Mode" description="Enable dark mode for system UI">
                 <Switch checked={darkMode} onCheckedChange={setDarkMode} />
-              </div>
+              </SettingsRow>
 
               <div className="space-y-2">
-                <div className="font-medium">Accent Color</div>
+                <div className="font-medium text-zinc-800">Accent Color</div>
                 <div className="flex space-x-2">
                   {["bg-blue-500", "bg-purple-500", "bg-pink-500", "bg-red-500", "bg-green-500", "bg-yellow-500"].map(
                     (color) => (
@@ -128,25 +158,24 @@ export default function SettingsApp({
               </div>
 
               <div className="space-y-2">
-                <div className="font-medium">Text Size</div>
+                <div className="font-medium text-zinc-800">Text Size</div>
                 <Slider defaultValue={[12]} max={20} min={8} step={1} />
-                <div className="flex justify-between text-xs text-gray-500">
+                <div className="flex justify-between text-xs text-zinc-500">
                   <span>Small</span>
                   <span>Medium</span>
                   <span>Large</span>
                 </div>
               </div>
-            </div>
+            </SettingsSection>
           </div>
         )}
-        {activeTab === "sound" && (
-          <div aria-label="sound" className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-medium">Sound Settings</h2>
 
+        {activeTab === "sound" && (
+          <div aria-label="sound" className="space-y-4">
+            <SettingsSection title="Sound Settings" description="Âm lượng và âm thanh hệ thống.">
               <div className="space-y-2">
-                <div className="font-medium">Volume</div>
-                <div className="flex items-center space-x-2">
+                <div className="font-medium text-zinc-800">Volume</div>
+                <div className="flex items-center space-x-2 rounded-xl border border-zinc-200/70 bg-white/80 px-4 py-3">
                   <VolumeX className="w-4 h-4" />
                   <Slider
                     value={[volume]}
@@ -156,48 +185,34 @@ export default function SettingsApp({
                     className="flex-1"
                   />
                   <Volume2 className="w-4 h-4" />
-                  <span className="w-8 text-right text-sm">{volume}%</span>
+                  <span className="w-10 text-right text-sm text-zinc-700">{volume}%</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium">Sound Effects</div>
-                  <div className="text-sm text-gray-500">Play sound effects for UI interactions</div>
-                </div>
+              <SettingsRow title="Sound Effects" description="Play sound effects for UI interactions">
                 <Switch defaultChecked />
-              </div>
+              </SettingsRow>
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium">Startup Sound</div>
-                  <div className="text-sm text-gray-500">Play sound when system starts</div>
-                </div>
+              <SettingsRow title="Startup Sound" description="Play sound when system starts">
                 <Switch defaultChecked />
-              </div>
-            </div>
+              </SettingsRow>
+            </SettingsSection>
           </div>
         )}
 
         {activeTab === "network" && (
-          <div aria-label="network" className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-medium">Network Settings</h2>
-
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium">Wi-Fi</div>
-                  <div className="text-sm text-gray-500">Connect to wireless networks</div>
-                </div>
+          <div aria-label="network" className="space-y-4">
+            <SettingsSection title="Network Settings" description="Quản lý Wi-Fi và kết nối thiết bị.">
+              <SettingsRow title="Wi-Fi" description="Connect to wireless networks">
                 <Switch checked={wifi} onCheckedChange={setWifi} />
-              </div>
+              </SettingsRow>
 
               {wifi && (
-                <div className="border rounded-lg p-4 space-y-2">
-                  <div className="font-medium">Available Networks</div>
+                <div className="border border-zinc-200/70 rounded-xl p-4 space-y-2 bg-white/80">
+                  <div className="font-medium text-zinc-800">Available Networks</div>
                   <div className="space-y-2">
                     {["Steve Network", "Office Wi-Fi", "Guest Network"].map((network) => (
-                      <div key={network} className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-md">
+                      <div key={network} className="flex items-center justify-between p-2 hover:bg-zinc-100 rounded-lg">
                         <div className="flex items-center">
                           <Wifi className="w-4 h-4 mr-2" />
                           <span>{network}</span>
@@ -211,29 +226,23 @@ export default function SettingsApp({
                 </div>
               )}
 
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-medium">Bluetooth</div>
-                  <div className="text-sm text-gray-500">Connect to Bluetooth devices</div>
-                </div>
+              <SettingsRow title="Bluetooth" description="Connect to Bluetooth devices">
                 <Switch defaultChecked />
-              </div>
-            </div>
+              </SettingsRow>
+            </SettingsSection>
           </div>
         )}
 
         {activeTab === "users" && (
-          <div aria-label="users" className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-medium">User Settings</h2>
-
-              <div className="flex items-center space-x-4 p-4 border rounded-lg">
+          <div aria-label="users" className="space-y-4">
+            <SettingsSection title="User Settings" description="Thông tin tài khoản và đăng xuất.">
+              <div className="flex items-center space-x-4 p-4 border border-zinc-200/70 rounded-xl bg-white/80">
                 <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl font-bold">
                   {user && user.username.charAt(0).toUpperCase()}
                 </div>
                 <div>
                   <div className="font-medium text-lg">{user && user.username}</div>
-                  <div className="text-sm text-gray-500">Administrator</div>
+                  <div className="text-sm text-zinc-500">Administrator</div>
                 </div>
               </div>
 
@@ -243,15 +252,14 @@ export default function SettingsApp({
                   <span>Đăng xuất</span>
                 </Button>
               </div>
-            </div>
+            </SettingsSection>
           </div>
         )}
 
         {activeTab === "apps" && (
-          <div aria-label="apps" className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-lg font-medium">Dynamic Apps Management</h2>
-              <p className="text-sm text-gray-600">
+          <div aria-label="apps" className="space-y-4">
+            <SettingsSection title="Dynamic Apps Management" description="Quản lý các app mở rộng cho desktop.">
+              <p className="text-sm text-zinc-600">
                 Thêm các ứng dụng web, component React hoặc micro frontend vào desktop.
               </p>
 
@@ -263,7 +271,7 @@ export default function SettingsApp({
                   onDeleteApp={onDeleteApp}
                 />
               )}
-            </div>
+            </SettingsSection>
           </div>
         )}
       </div>

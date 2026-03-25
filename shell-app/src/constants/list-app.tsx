@@ -3,6 +3,7 @@ import ComputerControlApp from "@/components/apps/ComputerControlApp"
 import DynamicWebApp from "@/components/apps/DynamicWebApp"
 import FinderApp from "@/components/apps/FinderApp"
 import GameApp from "@/components/apps/GameApp"
+import MediaStaticDownloadApp from "@/components/apps/MediaStaticDownloadApp"
 import MovieApp from "@/components/apps/MovieApp"
 import NotesApp from "@/components/apps/NotesApp"
 import PhotoApp from "@/components/apps/PhotoApp"
@@ -240,6 +241,17 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
             allowFullscreen: true,
         }} />,
     },
+    [AppId.MEDIA_STATIC_DOWNLOAD]: {
+        id: AppId.MEDIA_STATIC_DOWNLOAD,
+        name: "Media Static Download",
+        icon: <HardDrive className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-cyan-500 to-blue-600" />,
+        color: "bg-gradient-to-tl from-cyan-500 to-blue-600",
+        category: AppCategory.MEDIA,
+        defaultSize: { width: 900, height: 500 },
+        minSize: { width: 500, height: 320 },
+        defaultPosition: { x: 120, y: 70 },
+        component: MediaStaticDownloadApp,
+    },
     [AppId.DRIVE]: {
         id: AppId.DRIVE,
         name: "Drive",
@@ -363,6 +375,7 @@ export const DESKTOP_APPS: AppId[] = [
     AppId.FACEBOOK,
     AppId.GITHUB,
     AppId.TELEGRAM,
+    AppId.MEDIA_STATIC_DOWNLOAD,
     AppId.COMPUTER_CONTROL,
     AppId.MOVIE,
 ]

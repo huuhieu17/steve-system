@@ -17,6 +17,7 @@ export default function Desktop({ }: DesktopProps) {
   const [desktopApps] = useState<any>([
     APP_CONFIGS.movies,
     APP_CONFIGS.photos,
+    APP_CONFIGS.media_static_download,
     APP_CONFIGS.computer_control,
     APP_CONFIGS.comic,
     APP_CONFIGS.GAME2048,

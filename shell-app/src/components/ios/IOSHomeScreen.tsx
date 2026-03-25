@@ -7,7 +7,9 @@ import {
   Film,
   Gamepad2,
   Github,
+  HardDrive,
   ImagesIcon as Photos,
+  Settings,
   Send
 } from "lucide-react"
 import { useState } from "react"
@@ -34,6 +36,8 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       { id: "facebook", name: "Facebook", icon: Facebook, color: "bg-blue-500" },
       { id: "github", name: "Github", icon: Github, color: "bg-gray-800" },
       { id: "telegram", name: "Telegram", icon: Send, color: "bg-blue-400" },
+      { id: "settings", name: "Cài đặt", icon: Settings, color: "bg-gray-500" },
+      { id: "media_static_download", name: "Media Download", icon: HardDrive, color: "bg-gradient-to-br from-cyan-500 to-blue-600" },
       { id: "game2048", name: "2048 Game", icon: Gamepad2, color: "bg-gradient-to-br from-green-400 to-blue-600" },
       { id: "game-console", name: "Game Console", icon: Gamepad2, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
 
