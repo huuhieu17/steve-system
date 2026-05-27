@@ -71,6 +71,7 @@ export enum AppId {
   GAME2048 = "GAME2048",
   GAMEMario = "GAMEMario",
   GAME_CONSOLE = "game-console",
+  LOCKET = "locket",
   MEDIA_STATIC_DOWNLOAD = "media_static_download",
 }
 

@@ -10,7 +10,7 @@ interface StatusBarProps {
 export default function StatusBar({ onOpenSettings }: StatusBarProps) {
   const windowManager = useWindowManager();
   const startRef = useRef<HTMLDivElement>(null);
-  const { user, handleLogout } = useSystem()
+  const { user, handleLogout } = useSystem();
   const [time, setTime] = useState(
     new Date().toLocaleTimeString("vi-VN", {
       hour: "2-digit",

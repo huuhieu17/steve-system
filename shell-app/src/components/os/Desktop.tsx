@@ -26,6 +26,7 @@ export default function Desktop({ }: DesktopProps) {
     APP_CONFIGS.facebook,
     APP_CONFIGS.telegram,
     APP_CONFIGS.github,
+    APP_CONFIGS.locket,
   ])
 
   const handleDockItemClick = (appId: string) => {

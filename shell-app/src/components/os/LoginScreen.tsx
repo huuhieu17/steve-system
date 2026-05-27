@@ -54,8 +54,9 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
 
       const { code, message, data: loginResult } = data;
       const { authenticated } = loginResult || {};
-      if (!data || code !== 200 || !authenticated) {
+      if (!data || code !== 200 || !authenticated || authenticated === false) {
         handleError(message || "Tên người dùng hoặc mật khẩu không đúng");
+        return;
       }
       setIsSubmitting(false);
       fetchUserData();

@@ -24,6 +24,7 @@ import {
     Gamepad2,
     Github,
     HardDrive,
+    Heart,
     Mail,
     MessageSquare,
     Music,
@@ -176,7 +177,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         defaultPosition: { x: 100, y: 50 },
         component:() => <DynamicWebApp app={{
             id: AppId.COMIC,
-            name: 'Dọc Truyện',
+            name: 'Đọc Truyện',
             type: "iframe",
             url: 'https://comic.imsteve.dev',
             icon: 'film',
@@ -293,7 +294,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 600, height: 400 },
         minSize: { width: 300, height: 200 },
-        defaultPosition: { x: 220, y: 140 },
+        defaultPosition: { x: 220, y: 50 },
         component: () => <ComputerControlApp />,
     },
     [AppId.MOVIE]: {
@@ -304,7 +305,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
-        defaultPosition: { x: 150, y: 150 },
+        defaultPosition: { x: 150, y: 50 },
         component: () => <MovieApp />,
     },
     [AppId.GAME2048]: {
@@ -315,7 +316,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         category: AppCategory.GAMES,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
-        defaultPosition: { x: 150, y: 150 },
+        defaultPosition: { x: 150, y: 50 },
         component: () => <GameApp gameConfig={GAME_LIST["2048"]} appId={AppId.GAME2048} />,
     },
      [AppId.GAMEMario]: {
@@ -326,7 +327,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         category: AppCategory.GAMES,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
-        defaultPosition: { x: 150, y: 150 },
+        defaultPosition: { x: 150, y: 50 },
         component: () => <GameApp gameConfig={GAME_LIST.Mario} appId={AppId.GAMEMario} />,
     },
     [AppId.GAME_CONSOLE]: {
@@ -339,6 +340,25 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         minSize: { width: 500, height: 400 },
         defaultPosition: { x: 100, y: 50 },
         component: () => <GameConsole appId={AppId.GAME_CONSOLE} />,
+    },
+    [AppId.LOCKET]: {
+        id: AppId.LOCKET,
+        name: "Locket",
+        icon: <Heart className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-yellow-400 to-orange-600" />,
+        color: "bg-gradient-to-tl from-pink-400 to-purple-600",
+        category: AppCategory.PRODUCTIVITY,
+        defaultSize: { width: 800, height: 500 },
+        minSize: { width: 400, height: 300 },
+        defaultPosition: { x: 150, y: 50 },
+        component: () => <DynamicWebApp app={{
+            id: AppId.LOCKET,
+            name: 'Locket',
+            type: "iframe",
+            url: 'https://locket.page',
+            icon: 'film',
+            color: "bg-gradient-to-tl from-pink-400 to-purple-600",
+            allowFullscreen: true,
+        }} />,
     },
     
 
@@ -378,4 +398,5 @@ export const DESKTOP_APPS: AppId[] = [
     AppId.MEDIA_STATIC_DOWNLOAD,
     AppId.COMPUTER_CONTROL,
     AppId.MOVIE,
+    AppId.LOCKET,
 ]
