@@ -21,11 +21,12 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       { id: AppId.PHOTOS, name: "Thư viện ảnh", icon: AppId.PHOTOS, color: "bg-gradient-to-br from-red-400 to-pink-500" },
       { id: AppId.MOVIES, name: "Xem phim", icon: AppId.MOVIES, color: "bg-gradient-to-br from-black-400 to-green-500" },
       { id: AppId.COMIC, name: "Đọc truyện", icon: AppId.COMIC, color: "bg-gradient-to-br from-yellow-400 to-red-500" },
+      { id: AppId.LOCKET, name: "Locket", icon: AppId.LOCKET, color: "bg-gradient-to-br from-red-400 to-yellow-500" },
       { id: AppId.COMPUTER_CONTROL, name: "Điều khiển máy tính", icon: AppId.COMPUTER_CONTROL, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
       { id: AppId.MEDIA_STATIC_DOWNLOAD, name: "Media Download", icon: AppId.MEDIA_STATIC_DOWNLOAD, color: "bg-gradient-to-br from-cyan-500 to-blue-600" },
       { id: AppId.GAME2048, name: "2048 Game", icon: AppId.GAME_CONSOLE, color: "bg-gradient-to-br from-green-400 to-blue-600" },
       { id: AppId.GAME_CONSOLE, name: "Game Console", icon: AppId.GAME_CONSOLE, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
-
+      
     ],
   ]
 

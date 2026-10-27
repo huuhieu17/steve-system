@@ -3,44 +3,20 @@ import ComputerControlApp from "@/components/apps/ComputerControlApp"
 import DynamicWebApp from "@/components/apps/DynamicWebApp"
 import FinderApp from "@/components/apps/FinderApp"
 import GameApp from "@/components/apps/GameApp"
+import GameConsole from "@/components/apps/GameConsole"
 import MediaStaticDownloadApp from "@/components/apps/MediaStaticDownloadApp"
 import MovieApp from "@/components/apps/MovieApp"
-import NotesApp from "@/components/apps/NotesApp"
 import PhotoApp from "@/components/apps/PhotoApp"
 import SafariAppOptimized from "@/components/apps/SafariApp"
 import SettingsApp from "@/components/apps/SettingsApp"
 import { type AppConfig, AppCategory, AppId } from "@/types/window"
-import {
-    BookOpen,
-    Calculator,
-    Calendar,
-    Camera,
-    Compass,
-    Computer,
-    Facebook,
-    FileText,
-    Film,
-    Folder,
-    Gamepad2,
-    Github,
-    HardDrive,
-    Heart,
-    Mail,
-    MessageSquare,
-    Music,
-    Send,
-    Settings,
-    Terminal,
-    User
-} from "lucide-react"
 import { GAME_LIST } from "./list-game"
-import GameConsole from "@/components/apps/GameConsole"
 
 export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.FINDER]: {
         id: AppId.FINDER,
         name: "Finder",
-        icon: <Folder className="w-6 h-6 text-white" />,
+        icon: AppId.FINDER,
         color: "bg-blue-500",
         category: AppCategory.SYSTEM,
         defaultSize: { width: 800, height: 500 },
@@ -51,7 +27,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.SETTINGS]: {
         id: AppId.SETTINGS,
         name: "System Preferences",
-        icon: <Settings className="w-6 h-6 text-white" />,
+        icon: AppId.SETTINGS,
         color: "bg-gray-500",
         category: AppCategory.SYSTEM,
         defaultSize: { width: 700, height: 500 },
@@ -59,21 +35,10 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         defaultPosition: { x: 150, y: 100 },
         component: SettingsApp,
     },
-    [AppId.NOTES]: {
-        id: AppId.NOTES,
-        name: "Notes",
-        icon: <FileText className="w-6 h-6 text-white" />,
-        color: "bg-yellow-500",
-        category: AppCategory.PRODUCTIVITY,
-        defaultSize: { width: 600, height: 400 },
-        minSize: { width: 300, height: 200 },
-        defaultPosition: { x: 200, y: 150 },
-        component: NotesApp,
-    },
     [AppId.CALCULATOR]: {
         id: AppId.CALCULATOR,
         name: "Calculator",
-        icon: <Calculator className="w-6 h-6 text-white" />,
+        icon: AppId.CALCULATOR,
         color: "bg-gray-600",
         category: AppCategory.UTILITIES,
         defaultSize: { width: 280, height: 400 },
@@ -84,7 +49,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.TERMINAL]: {
         id: AppId.TERMINAL,
         name: "Terminal",
-        icon: <Terminal className="w-6 h-6 text-white" />,
+        icon: AppId.TERMINAL,
         color: "bg-black",
         category: AppCategory.DEVELOPMENT,
         defaultSize: { width: 600, height: 400 },
@@ -95,18 +60,18 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.SAFARI]: {
         id: AppId.SAFARI,
         name: "Safari",
-        icon: <Compass className="w-6 h-6 text-white" />,
+        icon: AppId.SAFARI,
         color: "bg-gradient-to-tl from-blue-400 to-blue-600",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 900, height: 500 },
         minSize: { width: 500, height: 300 },
         defaultPosition: { x: 50, y: 50 },
-        component: () => <SafariAppOptimized/>,
+        component: () => <SafariAppOptimized />,
     },
     [AppId.MAIL]: {
         id: AppId.MAIL,
         name: "Mail",
-        icon: <Mail className="w-6 h-6 text-white" />,
+        icon: AppId.MAIL,
         color: "bg-blue-600",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 800, height: 500 },
@@ -117,7 +82,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.MESSAGES]: {
         id: AppId.MESSAGES,
         name: "Messages",
-        icon: <MessageSquare className="w-6 h-6 text-white" />,
+        icon: AppId.MESSAGES,
         color: "bg-green-500",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 600, height: 400 },
@@ -128,7 +93,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.MUSIC]: {
         id: AppId.MUSIC,
         name: "Music",
-        icon: <Music className="w-6 h-6 text-white" />,
+        icon: AppId.MUSIC,
         color: "bg-red-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 700, height: 500 },
@@ -139,7 +104,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.PHOTOS]: {
         id: AppId.PHOTOS,
         name: "Thư viện ảnh",
-        icon: <Camera className="bg-gradient-to-tl from-red-400 to-pink-500 w-10 h-10 text-white p-2 rounded" />,
+        icon: AppId.PHOTOS,
         color: "bg-gradient-to-tl from-yellow-400 to-orange-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
@@ -150,13 +115,13 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.MOVIES]: {
         id: AppId.MOVIES,
         name: "Xem Phim",
-        icon: <Film className="w-10 h-10 bg-gradient-to-tl from-black-400 to-green-500 text-white p-2 rounded" />,
+        icon: AppId.MOVIES,
         color: "bg-gradient-to-tl from-black-400 to-green-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
         defaultPosition: { x: 100, y: 50 },
-        component:() => <DynamicWebApp app={{
+        component: () => <DynamicWebApp app={{
             id: AppId.MOVIES,
             name: 'Xem phim',
             type: "iframe",
@@ -169,13 +134,13 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.COMIC]: {
         id: AppId.COMIC,
         name: "Đọc Truyện",
-        icon: <BookOpen className="hover:scale-110 transition-all duration-200 shadow-lg w-10 h-10 bg-gradient-to-tl from-yellow-400 to-red-500 text-white p-2 rounded" />,
+        icon: AppId.COMIC,
         color: "bg-blue-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
         defaultPosition: { x: 100, y: 50 },
-        component:() => <DynamicWebApp app={{
+        component: () => <DynamicWebApp app={{
             id: AppId.COMIC,
             name: 'Đọc Truyện',
             type: "iframe",
@@ -188,13 +153,13 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.FACEBOOK]: {
         id: AppId.FACEBOOK,
         name: "Facebook",
-        icon: <Facebook className="bg-blue-500 w-10 h-10 text-white p-2 rounded" />,
+        icon: AppId.FACEBOOK,
         color: "bg-blue-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
         defaultPosition: { x: 100, y: 50 },
-        component:() => <DynamicWebApp app={{
+        component: () => <DynamicWebApp app={{
             id: AppId.FACEBOOK,
             name: 'Facebook',
             type: "link",
@@ -207,13 +172,13 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.GITHUB]: {
         id: AppId.GITHUB,
         name: "GitHub",
-        icon: <Github className="bg-gray-800 w-10 h-10 text-white p-2 rounded" />,
+        icon: AppId.GITHUB,
         color: "bg-blue-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
         defaultPosition: { x: 100, y: 50 },
-        component:() => <DynamicWebApp app={{
+        component: () => <DynamicWebApp app={{
             id: AppId.GITHUB,
             name: 'GitHub',
             type: "link",
@@ -226,13 +191,13 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.TELEGRAM]: {
         id: AppId.TELEGRAM,
         name: "Telegram",
-        icon: <Send className="bg-blue-400 w-10 h-10 text-white p-2 rounded" />,
+        icon: AppId.TELEGRAM,
         color: "bg-blue-500",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
         minSize: { width: 400, height: 300 },
         defaultPosition: { x: 100, y: 50 },
-        component:() => <DynamicWebApp app={{
+        component: () => <DynamicWebApp app={{
             id: AppId.TELEGRAM,
             name: 'Telegram',
             type: "link",
@@ -245,7 +210,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.MEDIA_STATIC_DOWNLOAD]: {
         id: AppId.MEDIA_STATIC_DOWNLOAD,
         name: "Media Static Download",
-        icon: <HardDrive className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-cyan-500 to-blue-600" />,
+        icon: AppId.MEDIA_STATIC_DOWNLOAD,
         color: "bg-gradient-to-tl from-cyan-500 to-blue-600",
         category: AppCategory.MEDIA,
         defaultSize: { width: 900, height: 500 },
@@ -256,7 +221,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.DRIVE]: {
         id: AppId.DRIVE,
         name: "Drive",
-        icon: <HardDrive className="w-6 h-6 text-white" />,
+        icon: AppId.DRIVE,
         color: "bg-blue-500",
         category: AppCategory.UTILITIES,
         defaultSize: { width: 800, height: 500 },
@@ -267,7 +232,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.CALENDAR]: {
         id: AppId.CALENDAR,
         name: "Calendar",
-        icon: <Calendar className="w-6 h-6 text-white" />,
+        icon: AppId.CALENDAR,
         color: "bg-red-600",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 700, height: 500 },
@@ -278,7 +243,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.CONTACTS]: {
         id: AppId.CONTACTS,
         name: "Contacts",
-        icon: <User className="w-6 h-6 text-white" />,
+        icon: AppId.CONTACTS,
         color: "bg-gray-500",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 600, height: 400 },
@@ -289,7 +254,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.COMPUTER_CONTROL]: {
         id: AppId.COMPUTER_CONTROL,
         name: "Điều khiển máy tính",
-        icon: <Computer className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-purple-400 to-pink-600" />,
+        icon: AppId.COMPUTER_CONTROL,
         color: "bg-gradient-to-tl from-purple-400 to-pink-600",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 600, height: 400 },
@@ -300,7 +265,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.MOVIE]: {
         id: AppId.MOVIE,
         name: "Movie",
-        icon: <Film className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-red-400 to-orange-600" />,
+        icon: AppId.MOVIE,
         color: "bg-gradient-to-tl from-red-400 to-orange-600",
         category: AppCategory.MEDIA,
         defaultSize: { width: 800, height: 500 },
@@ -311,7 +276,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.GAME2048]: {
         id: AppId.GAME2048,
         name: "2048",
-        icon: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/2048_logo.svg/500px-2048_logo.svg.png" className="w-10 h-10 rounded text-white" />,
+        icon: AppId.GAME_CONSOLE,
         color: "bg-gradient-to-tl from-green-400 to-blue-600",
         category: AppCategory.GAMES,
         defaultSize: { width: 800, height: 500 },
@@ -319,10 +284,10 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         defaultPosition: { x: 150, y: 50 },
         component: () => <GameApp gameConfig={GAME_LIST["2048"]} appId={AppId.GAME2048} />,
     },
-     [AppId.GAMEMario]: {
+    [AppId.GAMEMario]: {
         id: AppId.GAMEMario,
         name: "Mario",
-        icon: <img src="https://i.pinimg.com/736x/2a/35/8d/2a358da09076583f525222993732efc1.jpg" className="w-10 h-10 rounded text-white" />,
+        icon: AppId.GAMEMario,
         color: "bg-gradient-to-tl from-green-400 to-blue-600",
         category: AppCategory.GAMES,
         defaultSize: { width: 800, height: 500 },
@@ -333,7 +298,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.GAME_CONSOLE]: {
         id: AppId.GAME_CONSOLE,
         name: "Game Console",
-        icon: <Gamepad2 className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-red-400 to-yellow-600" />,
+        icon: AppId.GAME_CONSOLE,
         color: "bg-purple-600",
         category: AppCategory.MEDIA,
         defaultSize: { width: 900, height: 500 },
@@ -344,7 +309,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
     [AppId.LOCKET]: {
         id: AppId.LOCKET,
         name: "Locket",
-        icon: <Heart className="w-10 h-10 p-2 rounded text-white bg-gradient-to-tl from-yellow-400 to-orange-600" />,
+        icon: AppId.LOCKET,
         color: "bg-gradient-to-tl from-pink-400 to-purple-600",
         category: AppCategory.PRODUCTIVITY,
         defaultSize: { width: 800, height: 500 },
@@ -360,26 +325,21 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
             allowFullscreen: true,
         }} />,
     },
-    
 
-    
+
+
 }
 
 export const DOCK_APPS: AppId[] = [
-    AppId.MOVIES,
-    AppId.PHOTOS,
-    AppId.COMPUTER_CONTROL,
-    AppId.FINDER,
-    AppId.SAFARI,
-    AppId.CALCULATOR,
-    AppId.TERMINAL, 
+    AppId.FACEBOOK,
+    AppId.GITHUB,
+    AppId.TELEGRAM,
     AppId.SETTINGS,
 ]
 
 export const DESKTOP_APPS: AppId[] = [
     AppId.FINDER,
     AppId.SETTINGS,
-    AppId.NOTES,
     AppId.CALCULATOR,
     AppId.TERMINAL,
     AppId.SAFARI,

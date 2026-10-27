@@ -6,11 +6,13 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { PlusCircle } from "lucide-react"
+import Icon from "../Icon"
+import type { AppId } from "@/types/window"
 
 interface DockItem {
   id: string
   name: string
-  icon: React.ReactNode
+  icon: AppId
   color: string
   isOpen?: boolean
 }
@@ -32,16 +34,7 @@ export default function Dock({ items, onItemClick, onAddItem }: DockProps) {
             <TooltipProvider key={app.id}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  {React.cloneElement(app.icon as any, {
-                    className: `relative ${
-                      hoveredItem === app.id ? "scale-125" : ""
-                    } ${app.color} hover:scale-110 transition-all duration-200 shadow-lg rounded-xl w-10 h-10 p-2 text-white`,
-                  
-                    onClick: () => onItemClick(app.id),
-                    onMouseEnter: () => setHoveredItem(app.id),
-                    onMouseLeave: () => setHoveredItem(null),
-                    
-                  })}
+                  <Icon name={app.icon} size={28} className={`relative ${hoveredItem === app.id ? "scale-125" : ""} hover:scale-125 transition-all duration-200 mx-2 rounded-xl w-10 h-10 text-white`} onClick={() => onItemClick(app.id)} onMouseEnter={() => setHoveredItem(app.id)} onMouseLeave={() => setHoveredItem(null)} />
                 </TooltipTrigger>
                 <TooltipContent side="top">
                   <p>{app.name}</p>

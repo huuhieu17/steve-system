@@ -123,8 +123,6 @@ export default function DynamicWebApp({ app, onClose, showWindowBar = true }: Dy
       {showWindowBar && (
         <div className="h-10 bg-gray-100 border-b flex items-center justify-between px-4">
           <div className="flex items-center space-x-2">
-            <div className={`w-4 h-4 ${app.color} rounded`}></div>
-            <span className="text-sm font-medium">{app.name}</span>
           </div>
           <div className="flex items-center space-x-1 z-[1001]">
             <Button variant="ghost" size="sm" onClick={handleRefresh} disabled={isLoading}>

@@ -7,6 +7,7 @@ import { useState } from "react"
 import Dock from "./Dock"
 import StatusBar from "./StatusBar"
 import Window from "./Window"
+import Icon from "../Icon"
 
 interface DesktopProps {
 }
@@ -15,6 +16,7 @@ export default function Desktop({ }: DesktopProps) {
   const windowManager = useWindowManager()
 
   const [desktopApps] = useState<any>([
+    APP_CONFIGS.finder,
     APP_CONFIGS.movies,
     APP_CONFIGS.photos,
     APP_CONFIGS.media_static_download,
@@ -63,7 +65,7 @@ export default function Desktop({ }: DesktopProps) {
             className="flex flex-col items-center w-20 h-20 group cursor-pointer"
             onClick={() => ( windowManager.openWindow(app.id))}
           >
-            <div className="p-2 rounded-lg group-hover:bg-white/10">{app.icon}</div>
+            <Icon name={app.icon} className={`w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform`} />
             <span className="text-xs text-white text-center mt-1 px-1 py-0.5 rounded group-hover:bg-blue-500">
               {app.name}
             </span>

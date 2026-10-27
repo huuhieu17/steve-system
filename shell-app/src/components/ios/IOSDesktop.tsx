@@ -73,6 +73,19 @@ export default function IOSDesktop() {
             allowFullscreen: true,
           }} onClose={closeApp} showWindowBar={false} />
         </IOSApp>
+      case AppId.LOCKET:
+        // return <IOSPhotosApp onClose={closeApp} />
+        return <IOSApp title="Locket" onClose={closeApp} >
+          <DynamicWebApp app={{
+            id: 'movies',
+            url: 'https://locket.page',
+            name: 'Locket',
+            type: "iframe",
+            icon: 'heart',
+            color: "bg-blue-500",
+            allowFullscreen: true,
+          }} onClose={closeApp} showWindowBar={false} />
+        </IOSApp>
       case "comic":
         return <IOSApp title="Đọc Truyện" onClose={closeApp} >
           <DynamicWebApp app={{

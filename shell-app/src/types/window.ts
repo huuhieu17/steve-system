@@ -28,7 +28,7 @@ export interface WindowState {
 export interface AppConfig {
   id: string
   name: string
-  icon: React.ReactNode
+  icon: AppId
   color: string
   category: AppCategory
   defaultSize: WindowSize
@@ -50,7 +50,6 @@ export enum AppCategory {
 export enum AppId {
   FINDER = "finder",
   SETTINGS = "settings",
-  NOTES = "notes",
   CALCULATOR = "calculator",
   TERMINAL = "terminal",
   SAFARI = "safari",
