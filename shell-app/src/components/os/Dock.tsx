@@ -1,13 +1,12 @@
 "use client"
 
-import React from "react"
 
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { PlusCircle } from "lucide-react"
-import Icon from "../Icon"
 import type { AppId } from "@/types/window"
+import { PlusCircle } from "lucide-react"
+import { useState } from "react"
+import Icon from "../Icon"
 
 interface DockItem {
   id: string

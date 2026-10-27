@@ -62,7 +62,7 @@ export default function StatusBar({ onOpenSettings }: StatusBarProps) {
 
   return (
     <div className="absolute top-0 left-0 right-0 h-6 bg-black/20 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-4 text-white text-sm font-medium z-50">
-      <div className="flex items-center space-x-4 relative" ref={startRef}>
+      <div className="flex items-center space-x-4 relative cursor-pointer" ref={startRef}>
         <div className="font-bold">
           <div onClick={() => setIsMenuOpen(!isMenuOpen)} className="cursor-pointer hover:bg-white/10 rounded px-1 flex items-center gap-2">
             {user ? user.username : 'Guest'}
@@ -95,12 +95,6 @@ export default function StatusBar({ onOpenSettings }: StatusBarProps) {
           )}
         </div>
         <span onClick={() => windowManager.openWindow('finder')}>Finder</span>
-        <span>File</span>
-        <span>Edit</span>
-        <span>View</span>
-        <span>Go</span>
-        <span>Window</span>
-        <span>Help</span>
       </div>
 
       <div className="flex items-center space-x-3">

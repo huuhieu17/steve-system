@@ -32,7 +32,7 @@ export const APP_CONFIGS: Record<AppId, AppConfig> = {
         category: AppCategory.SYSTEM,
         defaultSize: { width: 700, height: 500 },
         minSize: { width: 500, height: 400 },
-        defaultPosition: { x: 150, y: 100 },
+        defaultPosition: { x: 100, y: 50 },
         component: SettingsApp,
     },
     [AppId.CALCULATOR]: {
