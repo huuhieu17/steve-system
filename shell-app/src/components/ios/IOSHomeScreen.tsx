@@ -1,20 +1,9 @@
 "use client"
 
-import {
-  BookOpen,
-  Computer,
-  Facebook,
-  Film,
-  Gamepad2,
-  Github,
-  HardDrive,
-  ImagesIcon as Photos,
-  Settings,
-  Send
-} from "lucide-react"
+import { AppId } from "@/types/window"
 import { useState } from "react"
+import Icon from "../Icon"
 import IOSDock from "./IOSDock"
-import IOSStatusBar from "./IOSStatusBar"
 
 interface IOSHomeScreenProps {
   onOpenApp: (appId: string) => void
@@ -29,38 +18,29 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
       // { id: "phone", name: "Phone", icon: Phone, color: "bg-green-500" },
       // { id: "messages", name: "Messages", icon: MessageSquare, color: "bg-green-400" },
       // { id: "mail", name: "Mail", icon: Mail, color: "bg-blue-500" },
-      { id: "photos", name: "Thư viện ảnh", icon: Photos, color: "bg-gradient-to-br from-red-400 to-pink-500" },
-      { id: "movies", name: "Xem phim", icon: Film, color: "bg-gradient-to-br from-black-400 to-green-500" },
-      { id: "comic", name: "Đọc truyện", icon: BookOpen, color: "bg-gradient-to-br from-yellow-400 to-red-500" },
-      { id: "computer-control", name: "Điều khiển máy tính", icon: Computer, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
-      { id: "facebook", name: "Facebook", icon: Facebook, color: "bg-blue-500" },
-      { id: "github", name: "Github", icon: Github, color: "bg-gray-800" },
-      { id: "telegram", name: "Telegram", icon: Send, color: "bg-blue-400" },
-      { id: "settings", name: "Cài đặt", icon: Settings, color: "bg-gray-500" },
-      { id: "media_static_download", name: "Media Download", icon: HardDrive, color: "bg-gradient-to-br from-cyan-500 to-blue-600" },
-      { id: "game2048", name: "2048 Game", icon: Gamepad2, color: "bg-gradient-to-br from-green-400 to-blue-600" },
-      { id: "game-console", name: "Game Console", icon: Gamepad2, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
+      { id: AppId.PHOTOS, name: "Thư viện ảnh", icon: AppId.PHOTOS, color: "bg-gradient-to-br from-red-400 to-pink-500" },
+      { id: AppId.MOVIES, name: "Xem phim", icon: AppId.MOVIES, color: "bg-gradient-to-br from-black-400 to-green-500" },
+      { id: AppId.COMIC, name: "Đọc truyện", icon: AppId.COMIC, color: "bg-gradient-to-br from-yellow-400 to-red-500" },
+      { id: AppId.COMPUTER_CONTROL, name: "Điều khiển máy tính", icon: AppId.COMPUTER_CONTROL, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
+      { id: AppId.MEDIA_STATIC_DOWNLOAD, name: "Media Download", icon: AppId.MEDIA_STATIC_DOWNLOAD, color: "bg-gradient-to-br from-cyan-500 to-blue-600" },
+      { id: AppId.GAME2048, name: "2048 Game", icon: AppId.GAME_CONSOLE, color: "bg-gradient-to-br from-green-400 to-blue-600" },
+      { id: AppId.GAME_CONSOLE, name: "Game Console", icon: AppId.GAME_CONSOLE, color: "bg-gradient-to-br from-purple-400 to-pink-500" },
 
     ],
   ]
 
   const dockApps = [
     // { id: "phone", name: "Phone", icon: Phone, color: "bg-green-500" },
-    { id: "photos", name: "Thư viện ảnh", icon: Photos, color: "bg-gradient-to-br from-red-400 to-pink-500" },
-    { id: "comic", name: "Đọc truyện", icon: BookOpen, color: "bg-gradient-to-br from-yellow-400 to-red-500" },
-    { id: "facebook", name: "Facebook", icon: Facebook, color: "bg-blue-500" },
-    { id: "github", name: "Github", icon: Github, color: "bg-gray-800" },
-    { id: "telegram", name: "Telegram", icon: Send, color: "bg-blue-400" },
+    { id: AppId.FACEBOOK, name: "Facebook", icon: AppId.FACEBOOK, color: "bg-blue-500" },
+    { id: AppId.GITHUB, name: "Github", icon: AppId.GITHUB, color: "bg-gray-800" },
+    { id: AppId.TELEGRAM, name: "Telegram", icon: AppId.TELEGRAM, color: "bg-blue-400" },
+    { id: AppId.SETTINGS, name: "Cài đặt", icon: AppId.SETTINGS, color: "bg-gray-500" },
   ]
 
   return (
     <div className="h-screen w-full bg-gradient-to-b from-blue-400 via-purple-500 to-pink-500 relative overflow-hidden ios-safe-top ios-safe-bottom">
       {/* Wallpaper */}
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=400')] bg-cover bg-center opacity-30" />
-
-
-      {/* Status Bar */}
-      <IOSStatusBar />
 
       {/* App Grid */}
       <div className="pt-12 pb-24 px-6 h-full overflow-hidden">
@@ -69,11 +49,7 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
             <button key={app.id} className="flex flex-col items-center group z-10" onClick={() => {
               onOpenApp(app.id)
             }}>
-              <div
-                className={`w-14 h-14 ${app.color} rounded-2xl flex items-center justify-center shadow-ios group-active:scale-95 transition-transform ios-no-select`}
-              >
-                <app.icon className="w-8 h-8 text-white" />
-              </div>
+                <Icon name={app.icon} size={28} className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-ios group-active:scale-95 transition-transform ios-no-select" />
               <span className="text-white text-xs mt-1 text-center font-medium drop-shadow-sm">{app.name}</span>
             </button>
           ))}

@@ -8,9 +8,10 @@ import type { DynamicApp } from "./DynamicAppManager"
 interface DynamicWebAppProps {
   app: DynamicApp
   onClose?: () => void
+  showWindowBar?: boolean
 }
 
-export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
+export default function DynamicWebApp({ app, onClose, showWindowBar = true }: DynamicWebAppProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -57,17 +58,19 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
   if (app.type === "component") {
     return (
       <div className="h-full flex flex-col">
-        <div className="h-10 bg-gray-100 border-b flex items-center justify-between px-4">
-          <div className="flex items-center space-x-2">
-            <div className={`w-4 h-4 ${app.color} rounded`}></div>
-            <span className="text-sm font-medium">{app.name}</span>
+        {showWindowBar && (
+          <div className="h-10 bg-gray-100 border-b flex items-center justify-between px-4">
+            <div className="flex items-center space-x-2">
+              <div className={`w-4 h-4 ${app.color} rounded`}></div>
+              <span className="text-sm font-medium">{app.name}</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <Button variant="ghost" size="sm" onClick={onClose}>
+                ✕
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center space-x-1">
-            <Button variant="ghost" size="sm" onClick={onClose}>
-              ✕
-            </Button>
-          </div>
-        </div>
+        )}
         <div className="flex-1 flex items-center justify-center bg-gray-50">
           <div className="text-center p-8">
             <Code className="w-16 h-16 text-gray-400 mx-auto mb-4" />
@@ -109,7 +112,7 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
 
   if (app.type === "link" && app.url) {
     window.open(app.url, "_blank");
-    if(onClose){
+    if (onClose) {
       onClose();
     }
   }
@@ -117,34 +120,30 @@ export default function DynamicWebApp({ app, onClose }: DynamicWebAppProps) {
   return (
     <div className={`h-full flex flex-col ${isFullscreen ? "absolute top-0 left-0 right-0 bottom-0 bg-white" : ""}`}>
       {/* Toolbar */}
-      <div className="h-8 bg-gray-100 border-b flex items-center justify-between px-4">
-        {!isFullscreen ? (
-          <div className="flex items-right space-x-2">
+      {showWindowBar && (
+        <div className="h-10 bg-gray-100 border-b flex items-center justify-between px-4">
+          <div className="flex items-center space-x-2">
             <div className={`w-4 h-4 ${app.color} rounded`}></div>
             <span className="text-sm font-medium">{app.name}</span>
-
           </div>
-        ) : (
-          <div className="blank" />
-        )
-        }
-        <div className="flex items-center space-x-1 z-[1001]">
-          <Button variant="ghost" size="sm" onClick={handleRefresh} disabled={isLoading}>
-            <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
-          </Button>
-          <Button variant="ghost" size="sm" onClick={handleOpenExternal}>
-            <ExternalLink className="w-4 h-4" />
-          </Button>
-          {app.allowFullscreen && (
-            <Button variant="ghost" size="sm" onClick={toggleFullscreen}>
-              {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+          <div className="flex items-center space-x-1 z-[1001]">
+            <Button variant="ghost" size="sm" onClick={handleRefresh} disabled={isLoading}>
+              <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
             </Button>
-          )}
-          <Button variant="ghost" size="sm" onClick={onClose}>
+            <Button variant="ghost" size="sm" onClick={handleOpenExternal}>
+              <ExternalLink className="w-4 h-4" />
+            </Button>
+            {app.allowFullscreen && (
+              <Button variant="ghost" size="sm" onClick={toggleFullscreen}>
+                {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onClick={onClose}>
               ✕
             </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Content */}
       <div className="flex-1 relative">

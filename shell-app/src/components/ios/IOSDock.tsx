@@ -1,12 +1,13 @@
 "use client"
 
-import type React from "react"
+import type { AppId } from "@/types/window"
+import Icon from "../Icon"
 
 interface IOSDockProps {
   apps: {
-    id: string
+    id: AppId
     name: string
-    icon: React.ComponentType<{ className?: string }>
+    icon: AppId
     color: string
   }[]
   onAppClick: (appId: string) => void
@@ -19,11 +20,8 @@ export default function IOSDock({ apps, onAppClick }: IOSDockProps) {
         <div className="flex justify-center space-x-4">
           {apps.map((app) => (
             <button key={app.id} className="group" onClick={() => onAppClick(app.id)}>
-              <div
-                className={`w-14 h-14 ${app.color} rounded-2xl flex items-center justify-center shadow-lg group-active:scale-95 transition-transform`}
-              >
-                <app.icon className="w-8 h-8 text-white" />
-              </div>
+
+              <Icon name={app.icon} size={28} className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-active:scale-95 transition-transform" />
             </button>
           ))}
         </div>

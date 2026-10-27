@@ -16,7 +16,7 @@ export default function IOSApp({ title, onClose, children, showBackButton = true
     <div className="h-screen w-full bg-white flex flex-col">
 
       {/* Header */}
-      <div className="pt-8 pb-2 px-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+      <div className="py-2 px-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
         {showBackButton ? (
           <button className="flex items-center space-x-1 text-blue-500 font-medium" onClick={onClose}>
             <ChevronLeft className="w-5 h-5" />

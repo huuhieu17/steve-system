@@ -65,20 +65,6 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
 
   return (
     <div className="max-h-screen h-screen w-full bg-gradient-to-b from-blue-900 via-purple-900 to-pink-900 relative overflow-hidden bg-gray-800">
-      {/* Status Bar */}
-      <div className="absolute top-2 left-4 right-4 flex justify-between items-center text-white text-sm font-medium z-20">
-        <div>{time.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })}</div>
-        <div className="flex items-center space-x-1">
-          <div className="flex space-x-1">
-            <div className="w-1 h-1 bg-white rounded-full" />
-            <div className="w-1 h-1 bg-white rounded-full" />
-            <div className="w-1 h-1 bg-white rounded-full" />
-            <div className="w-1 h-1 bg-white rounded-full" />
-          </div>
-
-        </div>
-      </div>
-
       {/* Time Display */}
       <div className="absolute top-1/5 left-0 right-0 text-center text-white">
         <div className="text-6xl font-light mb-2">
@@ -158,7 +144,6 @@ export default function IOSLockScreen({ onUnlock }: IOSLockScreenProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center space-y-4">
-            <div className="text-white text-sm mb-2">Mở khoá để truy cập các chức năng</div>
             <button
               className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center transition-transform duration-200 active:scale-95"
               onClick={handleGuestUnlock}

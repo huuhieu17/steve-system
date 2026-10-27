@@ -60,7 +60,7 @@ export default function Desktop({ }: DesktopProps) {
         {desktopApps.map((app: any) => (
           <div
             key={app.id}
-            className="flex flex-col items-center w-20 group cursor-pointer"
+            className="flex flex-col items-center w-20 h-20 group cursor-pointer"
             onClick={() => ( windowManager.openWindow(app.id))}
           >
             <div className="p-2 rounded-lg group-hover:bg-white/10">{app.icon}</div>

@@ -1,25 +1,24 @@
 "use client"
 
+import { GAME_LIST } from "@/constants/list-game"
 import { useWindowManager } from "@/hooks/useWindowManager"
 import { AppId } from "@/types/window"
 import DynamicWebApp from "../apps/DynamicWebApp"
+import GameApp from "../apps/GameApp"
+import GameConsole from "../apps/GameConsole"
+import MediaStaticDownloadApp from "../apps/MediaStaticDownloadApp"
+import IOSApp from "./IOSApp"
 import IOSHomeScreen from "./IOSHomeScreen"
 import IOSCalculatorApp from "./apps/IOSCalculatorApp"
 import IOSComputerControlApp from "./apps/IOSComputerControlApp"
 import IOSFinderApp from "./apps/IOSFinderApp"
-import IOSMailApp from "./apps/IOSMailApp"
 import IOSMovieApp from "./apps/IOSMovieApp"
 import IOSNotesApp from "./apps/IOSNotesApp"
-import IOSSafariApp from "./apps/IOSSafariApp"
 import IOSSettingsApp from "./apps/IOSSettingsApp"
-import GameApp from "../apps/GameApp"
-import { GAME_LIST } from "@/constants/list-game"
-import GameConsole from "../apps/GameConsole"
-import MediaStaticDownloadApp from "../apps/MediaStaticDownloadApp"
 
 export default function IOSDesktop() {
   const { currentIOSApp, setCurrentIOSApp } = useWindowManager();
-  
+
   const openApp = (appId: string) => {
     setCurrentIOSApp(appId)
   }
@@ -42,44 +41,50 @@ export default function IOSDesktop() {
         return <IOSFinderApp onClose={closeApp} />
       case "photos":
         // return <IOSPhotosApp onClose={closeApp} />
-        return <DynamicWebApp app={{
-          id: 'photos',
-          url: 'https://gallery.imsteve.dev',
-          name: 'Xem Ảnh',
-          type: "iframe",
-          icon: 'film',
-          color: "bg-blue-500",
-          allowFullscreen: true,
-        }} onClose={closeApp} />
+        return <IOSApp title="Thư viện ảnh" onClose={closeApp} >
+          <DynamicWebApp app={{
+            id: 'photos',
+            url: 'https://gallery.imsteve.dev',
+            name: 'Xem Ảnh',
+            type: "iframe",
+            icon: 'film',
+            color: "bg-blue-500",
+            allowFullscreen: true,
+          }} onClose={closeApp} showWindowBar={false} />
+        </IOSApp>
       case "game2048":
-        return <GameApp gameConfig={GAME_LIST["2048"]} appId={AppId.GAME2048} />
+        return <IOSApp title="2048 Game" onClose={closeApp} >
+          <GameApp gameConfig={GAME_LIST["2048"]} appId={AppId.GAME2048} />
+        </IOSApp>
       case "game-console":
-        return <GameConsole appId={AppId.GAME_CONSOLE} />
+        return <IOSApp title="Game Console" onClose={closeApp} >
+          <GameConsole appId={AppId.GAME_CONSOLE} />
+        </IOSApp>
       case "movies":
         // return <IOSPhotosApp onClose={closeApp} />
-        return <DynamicWebApp app={{
-          id: 'movies',
-          url: 'https://movie.imsteve.dev',
-          name: 'Xem Phim',
-          type: "iframe",
-          icon: 'film',
-          color: "bg-blue-500",
-          allowFullscreen: true,
-        }} onClose={closeApp} />
-      case "mail":
-        return <IOSMailApp onClose={closeApp} />
-      case "safari":
-        return <IOSSafariApp onClose={closeApp} />
+        return <IOSApp title="Xem Phim" onClose={closeApp} >
+          <DynamicWebApp app={{
+            id: 'movies',
+            url: 'https://movie.imsteve.dev',
+            name: 'Xem Phim',
+            type: "iframe",
+            icon: 'film',
+            color: "bg-blue-500",
+            allowFullscreen: true,
+          }} onClose={closeApp} showWindowBar={false} />
+        </IOSApp>
       case "comic":
-        return <DynamicWebApp app={{
-          id: 'comic',
-          url: 'https://comic.imsteve.dev',
-          name: 'Đọc Truyện',
-          type: "iframe",
-          icon: 'book-open',
-          color: "bg-gradient-to-br from-yellow-400 to-red-500",
-          allowFullscreen: true,
-        }} onClose={closeApp} />
+        return <IOSApp title="Đọc Truyện" onClose={closeApp} >
+          <DynamicWebApp app={{
+            id: 'comic',
+            url: 'https://comic.imsteve.dev',
+            name: 'Đọc Truyện',
+            type: "iframe",
+            icon: 'book-open',
+            color: "bg-gradient-to-br from-yellow-400 to-red-500",
+            allowFullscreen: true,
+          }} onClose={closeApp} showWindowBar={false} />
+        </IOSApp>
       case "facebook":
         return <DynamicWebApp app={{
           id: 'facebook',
@@ -111,7 +116,9 @@ export default function IOSDesktop() {
           allowFullscreen: true,
         }} onClose={closeApp} />
       case "media_static_download":
-        return <MediaStaticDownloadApp onClose={closeApp} />
+        return <IOSApp title="Media Download" onClose={closeApp} >
+          <MediaStaticDownloadApp onClose={closeApp} />
+        </IOSApp>
       case "movie":
         return <IOSMovieApp onClose={closeApp} />
       default:
