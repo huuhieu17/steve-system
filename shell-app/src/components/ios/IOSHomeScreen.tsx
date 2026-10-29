@@ -4,12 +4,14 @@ import { AppId } from "@/types/window"
 import { useState } from "react"
 import Icon from "../Icon"
 import IOSDock from "./IOSDock"
+import { useSystem } from "@/contexts/user-context"
 
 interface IOSHomeScreenProps {
   onOpenApp: (appId: string) => void
 }
 
 export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
+  const { systemConfig } = useSystem()
   const [currentPage, setCurrentPage] = useState(0)
 
   const apps = [
@@ -39,7 +41,14 @@ export default function IOSHomeScreen({ onOpenApp }: IOSHomeScreenProps) {
   ]
 
   return (
-    <div className="h-screen w-full bg-gradient-to-b from-blue-400 via-purple-500 to-pink-500 relative overflow-hidden ios-safe-top ios-safe-bottom">
+    <div 
+      style={systemConfig && systemConfig.appearance.backgroundMobileUrl ? {
+        backgroundImage: `url("${systemConfig.appearance.backgroundMobileUrl}")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      } : undefined}
+      className="h-screen w-full bg-gradient-to-b from-blue-400 via-purple-500 to-pink-500 relative overflow-hidden ios-safe-top ios-safe-bottom">
       {/* Wallpaper */}
       <div className="absolute inset-0 bg-[url('/placeholder.svg?height=800&width=400')] bg-cover bg-center opacity-30" />
 

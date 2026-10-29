@@ -8,7 +8,7 @@ import MediaStaticDownloadApp from "@/components/apps/MediaStaticDownloadApp"
 import MovieApp from "@/components/apps/MovieApp"
 import PhotoApp from "@/components/apps/PhotoApp"
 import SafariAppOptimized from "@/components/apps/SafariApp"
-import SettingsApp from "@/components/apps/SettingsApp"
+import SettingsApp from "@/components/apps/settings/SettingsApp"
 import { type AppConfig, AppCategory, AppId } from "@/types/window"
 import { GAME_LIST } from "./list-game"
 

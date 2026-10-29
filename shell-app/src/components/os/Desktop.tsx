@@ -8,11 +8,13 @@ import Dock from "./Dock"
 import StatusBar from "./StatusBar"
 import Window from "./Window"
 import Icon from "../Icon"
+import { useSystem } from "@/contexts/user-context"
 
 interface DesktopProps {
 }
 
 export default function Desktop({ }: DesktopProps) {
+  const { systemConfig } = useSystem()
   const windowManager = useWindowManager()
 
   const [desktopApps] = useState<any>([
@@ -53,7 +55,19 @@ export default function Desktop({ }: DesktopProps) {
 
   
   return (
-    <div className="h-screen w-full bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 relative overflow-hidden">
+    <div
+      className="h-screen w-full bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 relative overflow-hidden"
+      style={
+        systemConfig && systemConfig.appearance.backgroundUrl
+          ? {
+            backgroundImage: `url("${systemConfig.appearance.backgroundUrl}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }
+          : undefined
+      }
+    >
       {/* Status Bar */}
       <StatusBar onOpenSettings={handleOpenSettings} />
 

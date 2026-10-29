@@ -1,15 +1,18 @@
 
 
 import { consoleService } from '@/services/console.service';
-import type { BootState } from '@/types/System';
+import { systemConfigService } from '@/services/system-config.service';
+import type { BootState, SystemConfig } from '@/types/System';
 import type { User } from '@/types/User';
 import React, { createContext, useState, useContext, useEffect } from 'react';
+
 
 export interface SystemContextType {
     bootState: BootState;
     setBootState: React.Dispatch<React.SetStateAction<BootState>>;
     user: User | null;
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    systemConfig: SystemConfig | null;
     handleLogout: () => void;
     fetchUserData: () => void;
 }
@@ -35,10 +38,11 @@ type Props = {
 export const SystemProvider: React.FC<Props> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [bootState, setBootState] = useState<BootState>("splash");
+    const [systemConfig, setSystemConfig] = useState<SystemConfig | null>(null);
 
     const handleLogout = () => {
         consoleService.logout();
-        setBootState("login") 
+        setBootState("login")
         setUser(null)
     }
 
@@ -48,16 +52,28 @@ export const SystemProvider: React.FC<Props> = ({ children }) => {
             const { data } = response || {};
             if (!data || !data.data) return;
             setUser(data?.data);
+            fetchSystemConfig(data?.data?.id);
         } catch (error) {
             console.error("Failed to fetch user data:", error);
         }
     }
 
+    const fetchSystemConfig = async (userId: string) => {
+        try {
+            const response = await systemConfigService.getSystemConfig(userId);
+            const { data } = response || {};
+            if (!data || !data.data) return;
+            setSystemConfig(data?.data);
+        } catch (error) {
+            console.error("Failed to fetch system config:", error);
+        }
+    };
+
     useEffect(() => {
         fetchUserData();
     }, []);
     return (
-        <SystemContext.Provider value={{ user, setUser, bootState, setBootState, handleLogout, fetchUserData }}>
+        <SystemContext.Provider value={{ user, setUser, bootState, setBootState, handleLogout, fetchUserData, systemConfig }}>
             {children}
         </SystemContext.Provider>
     );
